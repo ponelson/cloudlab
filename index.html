@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f5f7" id="themeColorMeta">
+<title>Frontier Labs vs Cloud Model Platforms v2.0 — Field Note</title>
+<meta property="og:title" content="Frontier Labs vs Cloud Model Platforms v2.0">
+<meta property="og:description" content="Who operates inference, who processes the prompt, who owns whom and who gets paid: frontier lab services compared with multi-lab cloud model platforms, with an ownership map, cost model, door chooser and thirteen-field contract checklist. October 2026.">
+<meta name="description" content="Who operates inference, who processes the prompt, who owns whom and who gets paid: frontier lab services compared with multi-lab cloud model platforms, with an ownership map, cost model, door chooser and thirteen-field contract checklist. October 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700;8..60,900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — the ONLY place literal colors may appear.
+   Everything below this block uses var(--…). No exceptions.
+   ============================================================ */
+:root{
+  color-scheme:light;
+  --bg:#f5f5f7;
+  --bg-grad-1:rgba(234,243,255,.85);
+  --bg-grad-2:rgba(255,240,223,.75);
+  --bg-grad-3:#fbfbfd;
+  --bg-grad-4:#eff2f6;
+  --surface:#ffffff;  --surface-2:#f0f0f3;  --surface-3:#f1f3f5;
+  --glass:rgba(255,255,255,.72);
+  --glass-2:rgba(255,255,255,.60);
+  --glass-border:rgba(255,255,255,.72);
+  --nav-bg:rgba(245,245,247,.90);
+  --ink:#111114;  --ink-2:#3a3f4c;  --ink-3:#4a505c;  --ink-dim:#6b6f7b;  --ink-strong:#000000;
+  --line:rgba(0,0,0,.09);  --line-2:rgba(0,0,0,.16);  --line-solid:#e3e3e8;  --line-strong:#d2d2d7;
+  --blue:#0071e3;      --blue-ink:#0057b8;    --blue-soft:#e9f3ff;
+  --green:#1f8f4e;     --green-ink:#0f6a36;   --green-soft:#e9f7ee;
+  --orange:#b65f00;    --orange-ink:#8a4800;  --orange-soft:#fff1df;
+  --purple:#6b47d6;    --purple-ink:#4d32a3;  --purple-soft:#f0edff;
+  --red:#bd2b28;       --red-ink:#a52320;     --red-soft:#fdeceb;
+  --on-accent:#ffffff;
+  --invert-bg:#141417;  --invert-ink:#f5f5f7;  --invert-ink-2:#c9ccd3;  --invert-line:#2a2a30;
+  --code-bg:#141417;   --code-ink:#e6e8ee;    --code-line:#2a2a30;
+  --code-c:#7f8798; --code-k:#6fb2ff; --code-g:#63d193; --code-r:#ff7b72; --code-y:#ffc46b;
+  --code-light-bg:#f1f2f4; --code-light-ink:#1c1f26;
+  --note-bg:rgba(0,113,227,.05);   --note-line:rgba(0,113,227,.20);
+  --warn-bg:#fff7e8;               --warn-line:#f2d6a7;  --warn-ink:#5c3b00;
+  --strip-bg:#111114;  --strip-ink:#ffffff;
+  --strip-btn:rgba(255,255,255,.10); --strip-btn-hover:rgba(255,255,255,.20);
+  --strip-line:rgba(255,255,255,.20);
+  --pill-bg:rgba(255,255,255,.68);  --pill-ink:#252934;
+  --pill-on-bg:#111114;             --pill-on-ink:#ffffff;
+  --shadow:0 18px 60px rgba(0,0,0,.10);
+  --shadow-2:0 8px 28px rgba(0,0,0,.08);
+  --shadow-hover:0 16px 50px rgba(0,0,0,.11);
+  --orb-opacity:.72;
+  --gradtext:linear-gradient(102deg,#17191d 0%,#465365 48%,#0874dc 86%,#0068c9 100%);
+  --gradtext-fallback:#34475f;
+  --serif:'Source Serif 4', ui-serif, Georgia, serif;
+  --sans:'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', Segoe UI, sans-serif;
+  --mono:'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  --radius:28px; --radius-2:18px;
+}
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d0d10;
+  --bg-grad-1:rgba(23,42,71,.55);
+  --bg-grad-2:rgba(58,40,20,.45);
+  --bg-grad-3:#101015;
+  --bg-grad-4:#0a0a0d;
+  --surface:#17171c;  --surface-2:#1d1d23;  --surface-3:#22222a;
+  --glass:rgba(30,30,37,.72);
+  --glass-2:rgba(30,30,37,.60);
+  --glass-border:rgba(255,255,255,.10);
+  --nav-bg:rgba(16,16,20,.90);
+  --ink:#f2f2f5;  --ink-2:#c3c7d1;  --ink-3:#adb2bd;  --ink-dim:#9096a3;  --ink-strong:#ffffff;
+  --line:rgba(255,255,255,.12);  --line-2:rgba(255,255,255,.20);  --line-solid:#2b2b33;  --line-strong:#3a3a44;
+  --blue:#4da3ff;      --blue-ink:#8cc3ff;    --blue-soft:rgba(77,163,255,.16);
+  --green:#4bc47d;     --green-ink:#7fd9a2;   --green-soft:rgba(75,196,125,.16);
+  --orange:#f0a23c;    --orange-ink:#f5bd72;  --orange-soft:rgba(240,162,60,.16);
+  --purple:#a78bfa;    --purple-ink:#c4b1ff;  --purple-soft:rgba(167,139,250,.18);
+  --red:#f0736e;       --red-ink:#f79b97;     --red-soft:rgba(240,115,110,.16);
+  --on-accent:#0d0d10;
+  --invert-bg:#22222b;  --invert-ink:#f5f5f7;  --invert-ink-2:#c9ccd3;  --invert-line:#3d3d49;
+  --code-bg:#101014;   --code-ink:#e6e8ee;    --code-line:#2f2f3a;
+  --code-light-bg:#1b1b21; --code-light-ink:#dfe2e9;
+  --note-bg:rgba(77,163,255,.10);  --note-line:rgba(77,163,255,.30);
+  --warn-bg:rgba(240,162,60,.12);  --warn-line:rgba(240,162,60,.34); --warn-ink:#f3cd95;
+  --strip-bg:#000000;  --strip-ink:#f2f2f5;
+  --strip-btn:rgba(255,255,255,.10); --strip-btn-hover:rgba(255,255,255,.22);
+  --strip-line:rgba(255,255,255,.22);
+  --pill-bg:rgba(255,255,255,.07);  --pill-ink:#dcdfe7;
+  --pill-on-bg:#f2f2f5;             --pill-on-ink:#0d0d10;
+  --shadow:0 18px 60px rgba(0,0,0,.55);
+  --shadow-2:0 8px 28px rgba(0,0,0,.45);
+  --shadow-hover:0 16px 50px rgba(0,0,0,.60);
+  --orb-opacity:.30;
+  --gradtext:linear-gradient(102deg,#ffffff 0%,#cdd8e8 48%,#6fb2ff 86%,#4da3ff 100%);
+  --gradtext-fallback:#cfe0f5;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--ink); font-family:var(--sans);
+  font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(circle at 15% 0%, var(--bg-grad-1) 0, transparent 38%),
+    radial-gradient(circle at 80% 8%, var(--bg-grad-2) 0, transparent 32%),
+    linear-gradient(180deg, var(--bg-grad-3) 0, var(--bg) 45%, var(--bg-grad-4) 100%);
+  background-attachment:fixed;
+}
+a{color:var(--blue-ink); text-decoration:none;}
+a:hover{text-decoration:underline;}
+p{margin:0 0 1.05em; max-width:78ch;}
+strong{font-weight:700; color:var(--ink-strong);}
+::selection{background:var(--blue-soft); color:var(--ink-strong);}
+
+/* ============================================================
+   TOPBAR — dark contact strip + glass nav
+   ============================================================ */
+.topbar{position:sticky; top:0; z-index:60;}
+.contact-strip{
+  background:var(--strip-bg); color:var(--strip-ink);
+  border-bottom:1px solid var(--strip-line);
+}
+.contact-strip .wrap{display:flex; justify-content:flex-end; align-items:center; gap:8px; padding:7px 26px;}
+.contact-link{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.05em;
+  color:var(--strip-ink); background:var(--strip-btn);
+  border:0; border-radius:999px; padding:5px 11px; cursor:pointer;
+  text-decoration:none; transition:background .18s ease;
+}
+.contact-link:hover{background:var(--strip-btn-hover); text-decoration:none;}
+.contact-link svg{width:13px; height:13px; fill:currentColor;}
+
+.nav{
+  background:var(--nav-bg); backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.nav .wrap{display:flex; align-items:center; gap:16px; padding:10px 26px;}
+.brand{font-family:var(--serif); font-weight:700; font-size:17px; color:var(--ink); white-space:nowrap;}
+.vtag{
+  font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.08em;
+  color:var(--ink-dim); border:1px solid var(--line-2); border-radius:999px; padding:2px 8px;
+}
+#navlinks{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; margin-left:auto;}
+#navlinks::-webkit-scrollbar{display:none;}
+#navlinks a{
+  font-size:13px; font-weight:500; white-space:nowrap;
+  color:var(--pill-ink); background:var(--pill-bg);
+  border:1px solid var(--line); border-radius:999px; padding:5px 13px;
+  transition:background .18s ease, color .18s ease;
+}
+#navlinks a:hover{text-decoration:none; border-color:var(--line-2);}
+#navlinks a.active{background:var(--pill-on-bg); color:var(--pill-on-ink); border-color:transparent;}
+#menubtn{
+  display:none; margin-left:auto; background:var(--pill-bg); color:var(--ink);
+  border:1px solid var(--line); border-radius:10px; padding:6px 11px;
+  font-size:16px; line-height:1; cursor:pointer;
+}
+#drawer{display:none; flex-direction:column; gap:2px; padding:0 26px 14px;}
+#drawer.open{display:flex;}
+#drawer a{
+  color:var(--ink-2); font-size:15px; padding:9px 2px;
+  border-bottom:1px solid var(--line);
+}
+@media(max-width:960px){
+  #navlinks{display:none;}
+  #menubtn{display:block;}
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap{max-width:1460px; margin:0 auto; padding:0 26px;}
+.section{padding:64px 0; scroll-margin-top:96px;}
+.rule{height:1px; background:var(--line); border:0; margin:34px 0;}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative; overflow:hidden; padding:86px 0 66px;}
+.orb{
+  position:absolute; border-radius:50%; filter:blur(66px);
+  opacity:var(--orb-opacity); pointer-events:none; z-index:0;
+}
+.orb.a{width:460px; height:460px; top:-140px; left:-90px; background:var(--blue-soft);}
+.orb.b{width:380px; height:380px; top:-60px; right:-70px; background:var(--orange-soft);}
+.hero .wrap{position:relative; z-index:1;}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-dim); margin-bottom:20px;
+}
+.eyebrow b{color:var(--ink-2); font-weight:700;}
+.h1{
+  font-family:var(--serif); font-weight:900; font-size:clamp(38px,5.6vw,72px);
+  line-height:1.04; letter-spacing:-.022em; margin:0 0 22px; max-width:19ch; color:var(--ink);
+}
+.h1 em{
+  font-style:normal; color:var(--gradtext-fallback);
+  background:var(--gradtext); -webkit-background-clip:text; background-clip:text;
+}
+@supports((-webkit-background-clip:text) or (background-clip:text)){
+  .h1 em{-webkit-text-fill-color:transparent;}
+}
+.lede{font-size:clamp(18px,1.5vw,21px); line-height:1.55; color:var(--ink-2); max-width:70ch; margin:0 0 26px;}
+.cta{
+  display:inline-flex; align-items:center; gap:7px; margin:0 10px 10px 0;
+  background:var(--pill-on-bg); color:var(--pill-on-ink);
+  border:1px solid transparent; border-radius:999px; padding:11px 21px;
+  font-size:14px; font-weight:600; cursor:pointer;
+}
+.cta:hover{text-decoration:none; opacity:.88;}
+.cta.ghost{background:transparent; color:var(--ink); border-color:var(--line-2);}
+
+/* ============================================================
+   SECTION TYPE
+   ============================================================ */
+.kicker{
+  font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-dim); margin-bottom:12px;
+}
+h2{
+  font-family:var(--serif); font-weight:800; font-size:clamp(27px,3.1vw,40px);
+  line-height:1.14; letter-spacing:-.015em; margin:0 0 14px; color:var(--ink); max-width:22ch;
+}
+.sub{font-size:18px; color:var(--ink-2); max-width:940px; margin:0 0 30px;}
+h3.sub-h{
+  font-family:var(--serif); font-weight:700; font-size:22px;
+  margin:34px 0 12px; color:var(--ink); letter-spacing:-.01em;
+}
+
+/* ============================================================
+   GRID + CARDS
+   ============================================================ */
+.grid{display:grid; gap:20px; margin:26px 0;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+@media(max-width:960px){ .g2,.g3,.g4{grid-template-columns:1fr;} }
+.card{
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:var(--radius-2); padding:22px 24px;
+  box-shadow:var(--shadow-2); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  transition:box-shadow .22s ease, transform .22s ease;
+}
+.card:hover{box-shadow:var(--shadow-hover); transform:translateY(-2px);}
+.card h4{font-family:var(--sans); font-size:16px; font-weight:700; margin:0 0 8px; color:var(--ink);}
+.card p{font-size:15px; color:var(--ink-2); margin:0 0 .7em;}
+.card p:last-child{margin-bottom:0;}
+
+/* ============================================================
+   PANELS
+   ============================================================ */
+.panel{
+  background:var(--glass-2); border:1px solid var(--glass-border);
+  border-radius:var(--radius); padding:30px 34px; margin:26px 0;
+  box-shadow:var(--shadow); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.panel.invert, .plainbox{
+  background:var(--invert-bg); border:1px solid var(--invert-line);
+  color:var(--invert-ink); box-shadow:none;
+}
+.panel.invert h2, .panel.invert h3, .panel.invert h4,
+.plainbox h2, .plainbox h3, .plainbox h4{font-family:var(--serif); color:var(--invert-ink);}
+.panel.invert p, .plainbox p{color:var(--invert-ink-2);}
+.panel.invert strong, .plainbox strong{color:var(--invert-ink);}
+.panel.invert a, .plainbox a{color:var(--blue-ink);}
+.panel.invert .kicker, .plainbox .kicker{color:var(--invert-ink-2);}
+
+.fieldnote{
+  background:var(--note-bg); border:1px solid var(--note-line);
+  border-left:3px solid var(--blue); border-radius:var(--radius-2);
+  padding:18px 22px; margin:22px 0; font-size:15px; color:var(--ink-2);
+}
+.fieldnote .kicker{color:var(--blue-ink);}
+.fieldnote p:last-child{margin-bottom:0;}
+.warning{
+  background:var(--warn-bg); border:1px solid var(--warn-line);
+  border-left:3px solid var(--orange); border-radius:var(--radius-2);
+  padding:18px 22px; margin:22px 0; font-size:15px; color:var(--warn-ink);
+}
+.warning .kicker{color:var(--warn-ink);}
+.warning strong{color:var(--warn-ink);}
+.warning p:last-child{margin-bottom:0;}
+
+/* ============================================================
+   TAGS + STATS
+   ============================================================ */
+.tag{
+  display:inline-block; font-family:var(--mono); font-size:10px; font-weight:700;
+  letter-spacing:.07em; text-transform:uppercase;
+  border-radius:999px; padding:3px 9px; margin:0 5px 5px 0;
+  background:var(--surface-2); color:var(--ink-2);
+}
+.tag.blue{background:var(--blue-soft);   color:var(--blue-ink);}
+.tag.green{background:var(--green-soft); color:var(--green-ink);}
+.tag.orange{background:var(--orange-soft);color:var(--orange-ink);}
+.tag.purple{background:var(--purple-soft);color:var(--purple-ink);}
+.tag.red{background:var(--red-soft);     color:var(--red-ink);}
+
+.stat{
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:var(--radius-2); padding:20px 22px; box-shadow:var(--shadow-2);
+}
+.stat .n{
+  font-family:var(--serif); font-weight:900; font-size:clamp(28px,3.4vw,42px);
+  line-height:1.05; letter-spacing:-.02em; color:var(--ink); display:block;
+}
+.stat .t{font-size:13px; color:var(--ink-dim); margin-top:7px; display:block;}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.tablewrap{
+  background:var(--surface); border:1px solid var(--line-solid);
+  border-radius:var(--radius-2); margin:26px 0; overflow:hidden; box-shadow:var(--shadow-2);
+}
+.table-scroll{overflow-x:auto; max-height:640px; overflow-y:auto;}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:640px;}
+thead th{
+  position:sticky; top:0; z-index:2;
+  background:var(--surface-3); color:var(--ink-2);
+  font-family:var(--mono); font-size:10.5px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  text-align:left; padding:12px 16px; border-bottom:1px solid var(--line-strong);
+}
+tbody td{padding:13px 16px; border-bottom:1px solid var(--line); color:var(--ink-2); vertical-align:top;}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover td{background:var(--surface-2);}
+tbody td strong{color:var(--ink);}
+
+/* ============================================================
+   CODE
+   ============================================================ */
+pre.term, pre.light{
+  border-radius:var(--radius-2); padding:19px 22px; margin:22px 0;
+  overflow-x:auto; font-family:var(--mono); font-size:13px; line-height:1.65;
+}
+pre.term{background:var(--code-bg); color:var(--code-ink); border:1px solid var(--code-line);}
+pre.light{background:var(--code-light-bg); color:var(--code-light-ink); border:1px solid var(--line);}
+pre .c{color:var(--code-c);}  pre .k{color:var(--code-k);}  pre .g{color:var(--code-g);}
+pre .r{color:var(--code-r);}  pre .y{color:var(--code-y);}
+code{
+  font-family:var(--mono); font-size:.9em;
+  background:var(--surface-2); color:var(--ink); border-radius:6px; padding:1px 5px;
+}
+pre code{background:transparent; padding:0; color:inherit;}
+
+/* ============================================================
+   ACCORDION
+   ============================================================ */
+.fam{
+  background:var(--surface); border:1px solid var(--line-solid);
+  border-radius:var(--radius-2); margin:12px 0; overflow:hidden;
+}
+.fam-head{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:16px 22px; cursor:pointer; user-select:none;
+}
+.fam-head:hover{background:var(--surface-2);}
+.fam-head h4{margin:0; font-size:16px; font-weight:600; color:var(--ink);}
+.fam-head::after{content:"+"; font-family:var(--mono); font-size:17px; color:var(--ink-dim);}
+.fam.open .fam-head::after{content:"–";}
+.fam-body{display:grid; grid-template-rows:0fr; transition:grid-template-rows .26s ease;}
+.fam.open .fam-body{grid-template-rows:1fr;}
+.fam-body > div{overflow:hidden;}
+.fam-body .inner{padding:0 22px 20px; font-size:15px; color:var(--ink-2);}
+
+/* ============================================================
+   CHIPS
+   ============================================================ */
+.chiprow{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0;}
+.chip{
+  font-size:13px; font-weight:500; cursor:pointer;
+  background:var(--pill-bg); color:var(--pill-ink);
+  border:1px solid var(--line); border-radius:999px; padding:6px 14px;
+}
+.chip.active{background:var(--pill-on-bg); color:var(--pill-on-ink); border-color:transparent;}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{border-top:1px solid var(--line); margin-top:50px; padding:38px 0 60px;}
+.verstamp{
+  font-family:var(--mono); font-size:11.5px; line-height:1.75;
+  color:var(--ink-dim); max-width:90ch;
+}
+
+/* ============================================================
+   v1.1 ADDITIONS — tokens only
+   ============================================================ */
+.table-scroll[data-tall]{max-height:none;}
+a.src{
+  font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.04em;
+  color:var(--blue-ink); background:var(--blue-soft); border-radius:6px;
+  padding:1px 5px; white-space:nowrap; vertical-align:1px;
+}
+a.src:hover{text-decoration:none; background:var(--line-2);}
+.fam-h{margin:0; font:inherit;}
+button.fam-head{width:100%; background:transparent; border:0; font:inherit; color:inherit; text-align:left;}
+.fam-title{font-size:16px; font-weight:600; color:var(--ink);}
+.fam:not(.open) .fam-body > div{visibility:hidden;}
+.fam-head:focus-visible, .chip:focus-visible, #menubtn:focus-visible, .contact-link:focus-visible,
+#navlinks a:focus-visible, #drawer a:focus-visible, .cta:focus-visible, a.src:focus-visible, .table-scroll:focus-visible{
+  outline:2px solid var(--blue); outline-offset:2px;
+}
+.srclist{list-style:none; counter-reset:src; padding-left:0; max-width:100ch; font-size:14.5px; color:var(--ink-2); margin:0 0 26px;}
+.srclist li{counter-increment:src;}
+.srclist li::before{content:"S" counter(src); display:inline-block; min-width:3.2em; font-family:var(--mono); font-size:11px; font-weight:700; color:var(--blue-ink);}
+.srclist li{margin:0 0 .55em; padding:2px 6px; border-radius:6px; scroll-margin-top:110px;}
+.srclist li:target{background:var(--blue-soft);}
+.scroll-hint{
+  display:none; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  color:var(--ink-dim); padding:8px 16px; border-top:1px solid var(--line); background:var(--surface-3);
+}
+.tablewrap.is-scrollable .scroll-hint{display:block;}
+.tablewrap.is-scrollable .table-scroll{
+  background:
+    linear-gradient(to right, var(--surface) 30%, transparent) left center / 40px 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 30%, transparent) right center / 40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--line-2), transparent) left center / 14px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--line-2), transparent) right center / 14px 100% no-repeat scroll;
+}
+
+/* ============================================================
+   v2.0 ADDITIONS — tokens only
+   ============================================================ */
+.tier{
+  display:inline-block; font-family:var(--mono); font-size:10px; font-weight:700;
+  color:var(--ink-2); border:1px solid var(--line-2); border-radius:5px;
+  padding:0 5px; margin-right:6px; vertical-align:1px;
+}
+.calc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:18px 0 6px;}
+@media(max-width:960px){ .calc-grid{grid-template-columns:repeat(2,1fr);} }
+.field label{
+  display:block; font-family:var(--mono); font-size:10.5px; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:5px;
+}
+.field input[type=number], .field select, .gloss-search, td input[type=number]{
+  width:100%; font:inherit; font-size:15px; color:var(--ink); background:var(--surface);
+  border:1px solid var(--line-2); border-radius:10px; padding:8px 10px;
+}
+td input[type=number]{max-width:110px; font-size:14px; padding:6px 8px;}
+.field input:focus-visible, .field select:focus-visible, .gloss-search:focus-visible,
+td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+.chk{width:18px; height:18px; accent-color:var(--blue);}
+.result-box{
+  background:var(--surface); border:1px solid var(--line-solid); border-radius:var(--radius-2);
+  padding:18px 22px; margin:18px 0; color:var(--ink-2); font-size:15px;
+}
+.result-box h4{margin:0 0 10px; font-size:16px; color:var(--ink);}
+.result-box p{margin:0 0 .7em;}
+.result-box p:last-child{margin-bottom:0;}
+.num{font-family:var(--mono); font-size:13.5px; color:var(--ink); white-space:nowrap;}
+.gloss-search{max-width:420px; margin:6px 0 4px;}
+.panel .tablewrap{box-shadow:none;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *, *::before, *::after{transition:none !important; animation:none !important;}
+  .card:hover{transform:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="contact-strip">
+    <div class="wrap">
+      <a class="contact-link" href="mailto:ponelson@gmail.com">Email</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/ponelson/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="contact-link" href="https://ponelson.github.io/pon/" target="_blank" rel="noopener">GitHub</a>
+      <button class="contact-link" id="themeToggle" type="button" aria-pressed="false">
+        <span id="themeLabel">Dark</span>
+      </button>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Sections">
+    <div class="wrap">
+      <span class="brand">Field Note</span>
+      <span class="vtag">v2.0</span>
+      <div id="navlinks"></div>
+      <button id="menubtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer">☰</button>
+    </div>
+    <div id="drawer"></div>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="wrap">
+    <div class="eyebrow">Field Note / AI Platforms / <b>v2.0</b> · 12 October 2026, 4:10 PM ET · build 2026-10-12T16:10-04:00</div>
+    <h1 class="h1">Same model, <em>different door.</em></h1>
+    <p class="lede">A frontier lab sells its models and the product surface it builds around them. A cloud model platform sells many labs' models inside the cloud's identity, network, billing and compliance perimeter. In 2026 the old exclusivities broke: Claude runs on all three hyperscalers, and since 28 April OpenAI's frontier models run on AWS as well as Azure. The choice now turns on who operates inference, who processes the prompt, which features and safeguards come with the model, where agent state lives, and whose contract you sign. Each door is also a deal: the clouds that host the labs own parts of them, sell them compute and collect their bills.</p>
+    <a class="cta" href="#reading">Read on</a>
+    <a class="cta ghost" href="#checklist">Jump to the contract checklist</a>
+    <a class="cta ghost" href="#chooser">Door chooser</a>
+
+    <div class="grid g4">
+      <div class="stat"><span class="n">27 Apr 2026</span><span class="t">Microsoft's license to OpenAI IP becomes non-exclusive and OpenAI may serve any cloud; GPT reaches Bedrock the next day <a class="src" href="#s37">S37</a> <a class="src" href="#s16">S16</a></span></div>
+      <div class="stat"><span class="n">47%</span><span class="t">Share of Anthropic's 2025 revenue routed through AWS and Google marketplaces, per Reuters on the confidential IPO filing <a class="src" href="#s44">S44</a></span></div>
+      <div class="stat"><span class="n">~16¢</span><span class="t">Distribution fees per dollar of those sales, a Reuters calculation of about $351M on $2.16B <a class="src" href="#s44">S44</a></span></div>
+      <div class="stat"><span class="n">5 labels</span><span class="t">Claude platform labels in Anthropic's docs: first-party; Anthropic-operated on AWS; AWS-operated; Google-operated; Anthropic-operated on Azure <a class="src" href="#s48">S48</a></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="reading" data-nav="Read first">
+  <div class="wrap">
+    <div class="kicker">00 · How to read the claims</div>
+    <h2>Six ways "we have Claude" misleads.</h2>
+    <p class="sub">Most vendor statements in this market are true and still answer the wrong question. These six traps are worth learning before the tables, because every table below is built to avoid them.</p>
+
+    <div class="grid g3">
+      <div class="card">
+        <h4>1 · Catalog is not operator</h4>
+        <p>A model listed in a cloud console can be run by the cloud, by the model maker behind the cloud's front door, or by a third party the cloud routes to. The listing does not say which. Section 02 sorts paths by operator.</p>
+      </div>
+      <div class="card">
+        <h4>2 · Infrastructure is not operator</h4>
+        <p>"Hosted on Azure" can mean Anthropic runs the service on Azure hardware, acting as an independent processor for Microsoft <a class="src" href="#s36">S36</a>. Where the servers sit and who operates them are separate facts, and contracts need both.</p>
+      </div>
+      <div class="card">
+        <h4>3 · Same name, different service</h4>
+        <p>One set of weights now ships with different safeguards, retention rules, access tiers and serving hardware depending on the path <a class="src" href="#s52">S52</a> <a class="src" href="#s50">S50</a>. Section 05 lists what varies.</p>
+      </div>
+      <div class="card">
+        <h4>4 · List parity is not cost parity</h4>
+        <p>Rates match at list. Regional endpoint premiums, batch eligibility, caching and commit treatment do not <a class="src" href="#s49">S49</a> <a class="src" href="#s23">S23</a>. The calculator in section 04 prices a workload rather than a rate card.</p>
+      </div>
+      <div class="card">
+        <h4>5 · The door covers the call, not the turn</h4>
+        <p>An agent turn can invoke search, a code sandbox, a file store or an MCP server (open source), each with its own operator <a class="src" href="#s48">S48</a>. Section 06 extends the checklist from models to tools.</p>
+      </div>
+      <div class="card">
+        <h4>6 · Channel revenue is not customer revenue</h4>
+        <p>A lab can book a cloud-collected sale as its own gross revenue and record the cloud's cut as a marketing expense <a class="src" href="#s44">S44</a>. Read lab revenue and cloud AI revenue with the channel in mind.</p>
+      </div>
+    </div>
+
+    <div class="fieldnote">
+      <div class="kicker">Keys used throughout</div>
+      <p><strong>Doors.</strong> <span class="tag blue">1</span> maker direct · <span class="tag purple">2</span> maker-run, platform-billed · <span class="tag green">3</span> platform-operated. Amber marks independent inference clouds; grey marks data platforms, gateways, applications and regional platforms.</p>
+      <p><strong>Source tiers.</strong> <span class="tier">A</span> filing, vendor documentation or primary announcement · <span class="tier">B</span> wire service, major outlet, trade analyst or named research house · <span class="tier">C</span> secondary, single-source or third-party analysis, directional only. Tiers are shown in the source list in section 15.</p>
+      <p><strong>Marked analysis.</strong> Passages that open with "Reading" or sit under "Judgments" are this note's interpretation, not a vendor's statement.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="definitions" data-nav="Definitions">
+  <div class="wrap">
+    <div class="kicker">01 · Two businesses</div>
+    <h2>A lab sells a model and its product. A cloud sells a perimeter.</h2>
+    <p class="sub">The model can be identical on both paths. What differs is everything wrapped around the call.</p>
+
+    <p>A frontier lab (Anthropic, OpenAI, Google DeepMind, Mistral, xAI) earns its margin on the model and on the product surface closest to it: the native API where new tools, agent runtimes and beta features ship first, first-party applications used by employees, and increasingly an agent-management platform that competes for the same enterprise budget as the clouds. The lab also sells a relationship: roadmap visibility, direct escalation, and in OpenAI's case forward-deployed engineers attached to its Frontier agent platform <a class="src" href="#s17">S17</a>.</p>
+    <p>A cloud model platform (Amazon Bedrock, Microsoft Foundry, Google's Gemini Enterprise Agent Platform, formerly Vertex AI) earns its margin on keeping the workload inside the cloud account. It offers a multi-lab catalog behind one API family, cloud-operated inference in chosen regions, IAM and private networking, content guardrails, retrieval and agent runtimes, audit logging into the cloud's own tools, and a line item that can draw down an existing spend commitment. The model is one input to a governance and procurement argument.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag blue">Lab direct</span>
+        <h4>What a frontier lab sells</h4>
+        <p><strong>Models</strong> on the lab's own serving stack, with the newest capabilities on day one.</p>
+        <p><strong>Platform features</strong> that reach the lab API first and some cloud doors late or not at all: managed agents, skills, code execution, files, native web search and fetch <a class="src" href="#s48">S48</a> <a class="src" href="#s73">S73</a>.</p>
+        <p><strong>Applications</strong>: ChatGPT Enterprise and ChatGPT Work, Codex; Claude Enterprise, Claude Code, Claude Cowork; the Gemini app and Google AI Studio.</p>
+        <p><strong>Agent platforms</strong>: OpenAI Frontier (launched 5 February 2026), Claude Managed Agents <a class="src" href="#s18">S18</a> <a class="src" href="#s3">S3</a>.</p>
+      </div>
+      <div class="card">
+        <span class="tag green">Cloud-operated</span>
+        <h4>What a cloud model platform sells</h4>
+        <p><strong>Catalog breadth</strong>: several labs plus open-weight models under one set of APIs and one console.</p>
+        <p><strong>Operator control</strong>: inference on cloud-controlled infrastructure, with regional endpoints for residency.</p>
+        <p><strong>Governance</strong>: IAM, private endpoints, guardrails, audit trails, and compliance programs that cover in-scope models, regions and configurations, not the whole catalog by default.</p>
+        <p><strong>Commercials</strong>: consolidated billing and commit drawdown, at base list-price parity with the labs' first-party rates for the major proprietary models <a class="src" href="#s12">S12</a> <a class="src" href="#s6">S6</a>.</p>
+      </div>
+    </div>
+
+    <p>Two hyperscalers are also labs. Google builds Gemini and hosts Claude beside it; Microsoft added seven first-party MAI models to Foundry after Build 2026, in private preview, while hosting OpenAI, Anthropic and others <a class="src" href="#s11">S11</a>. Amazon lists its own Nova family in Bedrock <a class="src" href="#s22">S22</a>. Every cloud is therefore a distributor for the labs it hosts and a competitor to them, and Amazon, Google and Microsoft are also shareholders in the labs they distribute (section 04). That combination explains most of the channel behavior described below.</p>
+  </div>
+</section>
+
+<section class="section" id="operator" data-nav="Operator">
+  <div class="wrap">
+    <div class="kicker">02 · The axis that matters</div>
+    <h2>Ask who runs inference, not who lists the model.</h2>
+    <p class="sub">The old "cloud versus direct" choice now has three doors. Each is defined by who operates inference relative to who made the model, so the doors apply to any provider type, not only labs and hyperscalers.</p>
+
+    <div class="panel">
+      <svg viewBox="0 0 960 300" width="100%" role="img" aria-label="Three doors to a model: maker-operated direct, maker-operated but platform-billed, and platform-operated" style="display:block;max-width:960px;margin:0 auto;">
+        <g font-family="Inter, sans-serif">
+          <rect x="10" y="20" width="290" height="250" rx="18" fill="var(--blue-soft)" stroke="var(--line-2)"/>
+          <text x="30" y="54" font-size="12" font-weight="700" fill="var(--blue-ink)" letter-spacing="1.2">DOOR 1 · MAKER DIRECT</text>
+          <text x="30" y="90" font-size="15" font-weight="700" fill="var(--ink)">Operator: model maker</text>
+          <text x="30" y="118" font-size="14" fill="var(--ink-2)">Maker processes the data</text>
+          <text x="30" y="144" font-size="14" fill="var(--ink-2)">Full feature set, day one</text>
+          <text x="30" y="170" font-size="14" fill="var(--ink-2)">Billed by the maker</text>
+          <text x="30" y="196" font-size="14" fill="var(--ink-2)">Maker's attestations</text>
+          <text x="30" y="244" font-size="12" fill="var(--ink-dim)">Claude API · OpenAI API · Gemini API</text>
+
+          <rect x="335" y="20" width="290" height="250" rx="18" fill="var(--purple-soft)" stroke="var(--line-2)"/>
+          <text x="355" y="54" font-size="12" font-weight="700" fill="var(--purple-ink)" letter-spacing="0.8">DOOR 2 · MAKER-RUN, PLATFORM-BILLED</text>
+          <text x="355" y="90" font-size="15" font-weight="700" fill="var(--ink)">Operator: model maker</text>
+          <text x="355" y="118" font-size="14" fill="var(--ink-2)">Maker processes the data</text>
+          <text x="355" y="144" font-size="14" fill="var(--ink-2)">Near-full maker features</text>
+          <text x="355" y="170" font-size="14" fill="var(--ink-2)">Platform IAM, audit and bill</text>
+          <text x="355" y="196" font-size="14" fill="var(--ink-2)">Maker's terms and attestations</text>
+          <text x="355" y="244" font-size="12" fill="var(--ink-dim)">Claude Platform on AWS · Foundry</text>
+          <text x="355" y="260" font-size="12" fill="var(--ink-dim)">(both Claude hosting options)</text>
+
+          <rect x="660" y="20" width="290" height="250" rx="18" fill="var(--green-soft)" stroke="var(--line-2)"/>
+          <text x="680" y="54" font-size="12" font-weight="700" fill="var(--green-ink)" letter-spacing="1.2">DOOR 3 · PLATFORM-OPERATED</text>
+          <text x="680" y="90" font-size="15" font-weight="700" fill="var(--ink)">Operator: the platform</text>
+          <text x="680" y="118" font-size="14" fill="var(--ink-2)">Data in platform boundary</text>
+          <text x="680" y="144" font-size="14" fill="var(--ink-2)">Base inference + platform tools</text>
+          <text x="680" y="170" font-size="14" fill="var(--ink-2)">Platform line item</text>
+          <text x="680" y="196" font-size="14" fill="var(--ink-2)">Platform programs, if in scope</text>
+          <text x="680" y="244" font-size="12" fill="var(--ink-dim)">Bedrock · Google Agent Platform</text>
+          <text x="680" y="260" font-size="12" fill="var(--ink-dim)">Azure OpenAI · inference clouds</text>
+        </g>
+      </svg>
+    </div>
+
+    <p>Door 2 is the one that trips procurement. Claude Platform on AWS, launched 11 May 2026, is reached with AWS credentials, logged in CloudTrail and billed through AWS Marketplace, but Anthropic operates it and processes the data outside the AWS boundary <a class="src" href="#s2">S2</a> <a class="src" href="#s4">S4</a>. AWS's own documentation calls it a third-party offering not covered by AWS compliance programs, and points customers who need AWS as sole processor to Bedrock <a class="src" href="#s1">S1</a>. Claude in Microsoft Foundry has the same operator in both of its hosting options: Anthropic runs the service, on Anthropic infrastructure or on Azure infrastructure, and acts as an independent processor for Microsoft <a class="src" href="#s36">S36</a>. The Azure-hosted option keeps prompts and completions in Azure, with only usage metadata and content flagged by Anthropic's safety systems leaving it <a class="src" href="#s36">S36</a>, which makes it the one Door 2 path whose data location resembles Door 3. A buyer who hears "Claude, on our AWS bill" or "Claude, hosted on Azure" can land on either side of the operator line.</p>
+    <p>Door 3 has tightened. Anthropic documents Claude in Amazon Bedrock as running on AWS-managed infrastructure with zero operator access for Anthropic personnel <a class="src" href="#s49">S49</a>, and AWS describes OpenAI models on Bedrock as running with in-region processing and hardware-enforced isolation from operators <a class="src" href="#s13">S13</a>. Anthropic labels Claude on Google Cloud as Google-operated, the second platform-run Claude path <a class="src" href="#s48">S48</a>. On Azure, Claude went generally available on 29 June 2026 with an Azure-hosted option and usage counting toward Azure consumption commitments for eligible customers <a class="src" href="#s9">S9</a> <a class="src" href="#s10">S10</a>; v1.1 placed that option in Door 3, and this version moves it to Door 2 because Anthropic, not Microsoft, operates it <a class="src" href="#s36">S36</a>.</p>
+
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Door</th><th>Operates inference</th><th>Prompt processed by</th><th>Feature surface</th><th>Billing</th><th>Compliance cover</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag blue">1</span><strong>Maker direct</strong></td><td>Model maker</td><td>Model maker</td><td>Complete; betas first</td><td>Maker invoice</td><td>Maker's attestations, per service</td></tr>
+            <tr><td><span class="tag purple">2</span><strong>Maker-run, platform-billed</strong></td><td>Model maker</td><td>Model maker; outside the platform boundary, except Foundry's Azure-hosted option, where prompts stay in Azure <a class="src" href="#s36">S36</a></td><td>Near-complete on Claude Platform on AWS and Foundry's Anthropic-hosted option; narrower when Azure-hosted <a class="src" href="#s48">S48</a> <a class="src" href="#s36">S36</a></td><td>Platform marketplace, in Claude Consumption Units</td><td>Not the platform's programs by default; maker's terms; customer due diligence <a class="src" href="#s1">S1</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><span class="tag green">3</span><strong>Platform-operated</strong></td><td>Platform</td><td>Platform, on regional or cross-region endpoints</td><td>Model capabilities plus platform guardrails, retrieval and agent runtime; the maker's server-side tools are absent on Bedrock <a class="src" href="#s49">S49</a></td><td>Platform line item; may count toward commits</td><td>Platform's programs where the model, region, endpoint and configuration are in scope</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="warning">
+      <div class="kicker">Check per model, region and endpoint</div>
+      <p>"Prompts stay inside your cloud perimeter" is true for Door 3 and for Foundry's Azure-hosted option, and false for the other Door 2 paths. Some Claude models in Foundry are offered in only one hosting option; Fable and Mythos models are Anthropic-hosted only <a class="src" href="#s36">S36</a>. Bedrock offers global endpoints that route across regions and regional endpoints for residency, which cost 10% more <a class="src" href="#s49">S49</a>. Confirm the hosting option and endpoint type in the contract, not the catalog page.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="lag" data-nav="Feature lag">
+  <div class="wrap">
+    <div class="kicker">03 · Why Door 2 exists</div>
+    <h2>Labs ship to their own surface first.</h2>
+    <p class="sub">Clouds get the major models at base list-price parity. The agent features around the model arrive later, or as a cloud-native equivalent instead.</p>
+
+    <p>Per-token list rates for Claude are the same across the three AWS doors <a class="src" href="#s6">S6</a>, and AWS states that OpenAI pricing on Bedrock matches OpenAI's first-party rates <a class="src" href="#s12">S12</a>. List price is therefore not the differentiator. Timing and feature fidelity are. v1.1 relied on a May 2026 third-party comparison for the gap <a class="src" href="#s7">S7</a>; Anthropic's own feature matrix, re-read for this version on 12 October 2026, shows it persisting five months later. Claude Managed Agents is offered only on the direct API and Claude Platform on AWS <a class="src" href="#s73">S73</a>. Code execution, web fetch, Agent Skills and the Files API run on the API, Claude Platform on AWS and Foundry's Anthropic-hosted option; web search adds Google Cloud; Bedrock's Messages endpoint carries none of the server-side tools <a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a>. OpenAI made the opposite design choice on AWS: it is building a Stateful Runtime Environment with Amazon that is served through Bedrock <a class="src" href="#s38">S38</a>, while its models on Bedrock still come through two endpoints with different feature coverage <a class="src" href="#s15">S15</a>.</p>
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Feature</th><th>Claude API</th><th>Claude Platform on AWS</th><th>Bedrock</th><th>Google Cloud</th><th>Foundry, Anthropic-hosted</th><th>Foundry, Azure-hosted</th></tr></thead>
+          <tbody><tr><td><strong>Claude Managed Agents</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>No</td></tr><tr><td><strong>Code execution</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr><tr><td><strong>Web search</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td><td>Basic version</td></tr><tr><td><strong>Web fetch</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>Yes</td><td>Basic version</td></tr><tr><td><strong>Agent Skills</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr><tr><td><strong>MCP connector</strong></td><td>Beta</td><td>Beta</td><td>No</td><td>No</td><td>Beta</td><td>Beta</td></tr><tr><td><strong>Files API</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr><tr><td><strong>Message Batches API</strong></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>No</td></tr><tr><td><strong>Prompt caching, 5 min and 1 h</strong></td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td><strong>Memory tool (client-side)</strong></td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <p>Source: Anthropic's features overview and platform pages, accessed 12 October 2026 <a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a> <a class="src" href="#s73">S73</a>. "No" means not offered on that path in Anthropic's matrix; a platform may offer its own equivalent, such as Bedrock's batch inference <a class="src" href="#s23">S23</a>.</p>
+    <p>That lag is the commercial reason Door 2 exists. The lab keeps control of its feature surface and customer relationship while accepting the cloud's front door and bill. The cloud accepts it because the alternative is the customer leaving the account to go direct.</p>
+
+    <div class="fieldnote">
+      <div class="kicker">List price is not effective cost</div>
+      <p>Parity holds at the base list price. Effective cost still diverges on terms that sit outside that number. Bedrock alone lists Standard, Flex, Priority and Reserved service tiers, batch pricing 50% below on-demand for select models, and separate pricing for global cross-region versus in-region inference <a class="src" href="#s23">S23</a>. Prompt-caching discounts (90% on cached input for OpenAI models on Bedrock) <a class="src" href="#s13">S13</a>, provisioned throughput, marketplace fee treatment, support plans and network charges also differ by door. Bedrock's regional endpoints for Claude add 10% over global ones <a class="src" href="#s49">S49</a>. Compare on a modeled workload, not a rate card; the calculator in section 04 does that.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="money" data-nav="Money">
+  <div class="wrap">
+    <div class="kicker">04 · Follow the money</div>
+    <h2>Every door is also a deal.</h2>
+    <p class="sub">The clouds that host a lab's models also own part of it, sell it compute, collect its bills and compete with it. The doors in section 02 follow the contracts below.</p>
+
+    <p>v1.1 of this note explained the end of exclusivity with a compute purchase. The fuller sequence runs through equity and a license. OpenAI's October 2025 recapitalization left Microsoft with exclusive rights to OpenAI's IP and models until an AGI determination, while dropping Microsoft's right of first refusal on compute in return for a $250B Azure commitment <a class="src" href="#s74">S74</a>. On 27 February 2026 Amazon agreed to invest $50B in OpenAI, $15B at once and $35B on conditions, and AWS became the exclusive third-party cloud distributor for OpenAI Frontier <a class="src" href="#s38">S38</a>. Azure still held exclusivity over OpenAI's stateless APIs at that point <a class="src" href="#s72">S72</a>. On 27 April Microsoft's license became non-exclusive and OpenAI gained the right to serve all its products on any cloud <a class="src" href="#s37">S37</a>. GPT-5.5 reached Bedrock the next day <a class="src" href="#s16">S16</a>.</p>
+    <p><strong>Reading.</strong> The $38B compute contract of November 2025 bought capacity. The distribution right came from a shareholder relationship and a renegotiated license. Anthropic's AWS path ran the same way: Claude Platform on AWS, the first mainstream Door 2, was announced inside the April 2026 deal in which Amazon added $5B of equity and Anthropic committed more than $100B to AWS over ten years <a class="src" href="#s40">S40</a>.</p>
+
+    <h3 class="sub-h">The ownership map behind the doors</h3>
+    <div class="tablewrap">
+      <div class="table-scroll" data-tall="1">
+        <table>
+          <thead><tr><th>Lab and cloud</th><th>Equity</th><th>Compute</th><th>Distribution terms</th><th>Doors it opened</th><th>Sources</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Anthropic and Amazon</strong></td><td>$8.0B of convertible notes, Q3 2023 to Q4 2025; $5.0B more in Q2 2026, with up to $20B further on commercial milestones</td><td>More than $100B on AWS over ten years; up to 5 GW of Trainium capacity</td><td>Bedrock since 2023; Claude Platform on AWS announced in April 2026 and generally available in May</td><td><span class="tag purple">2</span> <span class="tag green">3</span></td><td><a class="src" href="#s71">S71</a> <a class="src" href="#s42">S42</a> <a class="src" href="#s40">S40</a> <a class="src" href="#s55">S55</a></td></tr>
+            <tr><td><strong>Anthropic and Google</strong></td><td>Long-standing shareholder; up to $40B committed in April 2026, $10B now at a $350B valuation and $30B on performance targets</td><td>A major expansion of Google Cloud TPU capacity tied to the same deal</td><td>Claude on Google Cloud's Agent Platform, Google-operated</td><td><span class="tag green">3</span></td><td><a class="src" href="#s41">S41</a> <a class="src" href="#s48">S48</a></td></tr>
+            <tr><td><strong>Anthropic and Microsoft, with NVIDIA</strong></td><td>Microsoft up to $5B and NVIDIA up to $10B, November 2025</td><td>$30B of Azure compute plus up to 1 GW, on NVIDIA Grace Blackwell (GB200, GB300) and Vera Rubin (VR200) systems</td><td>Claude in Foundry, Anthropic-operated in both hosting options; Anthropic a Microsoft 365 Copilot subprocessor since January 2026</td><td><span class="tag purple">2</span> <span class="tag">App</span></td><td><a class="src" href="#s39">S39</a> <a class="src" href="#s36">S36</a> <a class="src" href="#s57">S57</a></td></tr>
+            <tr><td><strong>OpenAI and Microsoft</strong></td><td>Roughly 27% after the October 2025 recapitalization</td><td>$250B incremental Azure commitment, October 2025</td><td>License to OpenAI IP through 2032, non-exclusive since 27 April 2026; Azure primary and ships first unless Microsoft cannot or chooses not to support a capability; OpenAI pays Microsoft a revenue share through 2030 at an unchanged, capped percentage, reported as 20%</td><td><span class="tag green">3</span></td><td><a class="src" href="#s74">S74</a> <a class="src" href="#s37">S37</a> <a class="src" href="#s47">S47</a></td></tr>
+            <tr><td><strong>OpenAI and Amazon</strong></td><td>$50B: $15B initial, $35B on conditions</td><td>$38B (November 2025) expanded by $100B over eight years, including about 2 GW of Trainium</td><td>AWS exclusive third-party distributor for OpenAI Frontier; a jointly built Stateful Runtime Environment served through Bedrock; GPT on Bedrock from 28 April 2026</td><td><span class="tag green">3</span></td><td><a class="src" href="#s38">S38</a> <a class="src" href="#s16">S16</a></td></tr>
+            <tr><td><strong>Cloud and its own lab</strong></td><td>Gemini at Google, MAI at Microsoft, Nova at Amazon</td><td>Internal</td><td>Maker and platform are one company, so Doors 1 and 3 collapse into the same path</td><td><span class="tag blue">1</span>=<span class="tag green">3</span></td><td><a class="src" href="#s11">S11</a> <a class="src" href="#s22">S22</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>The capital side of this map, including the guarantees and off-balance-sheet commitments behind the compute contracts, is traced in <a href="https://ponelson.github.io/aicircles/" target="_blank" rel="noopener">The Circular Economy of AI Capital</a>. This section keeps to what the deals mean for the doors.</p>
+
+    <h3 class="sub-h">Where a dollar of Claude spend goes, by door</h3>
+    <p>At list-price parity the buyer pays the same on every door. The seller does not keep the same amount. Reuters, reviewing Anthropic's confidential IPO filing, reported that 47% of its 2025 revenue, about $2.16B, came through the AWS and Google cloud marketplaces, and calculated that Anthropic paid about $351M back in distribution fees, roughly 16 cents per dollar of those sales <a class="src" href="#s44">S44</a>. The channel share rose from 11% of revenue in 2023 to 32% in 2024 and 47% in 2025 <a class="src" href="#s44">S44</a>. Anthropic books those sales as gross revenue, as principal, and records the platforms' cut under sales, marketing and partnerships <a class="src" href="#s44">S44</a>. A secondary account of the same filing says the two clouds also held about 60% of Anthropic's $909M of outstanding customer receivables at the end of 2025, and that the filing itself names the arrangement as a source of potential conflicts of interest <a class="src" href="#s45">S45</a>.</p>
+
+    <div class="grid g4">
+      <div class="stat"><span class="n">47%</span><span class="t">Anthropic's 2025 revenue routed through AWS and Google marketplaces, per Reuters on the confidential filing <a class="src" href="#s44">S44</a></span></div>
+      <div class="stat"><span class="n">~16¢</span><span class="t">Distribution fees per dollar of those sales, a Reuters calculation <a class="src" href="#s44">S44</a></span></div>
+      <div class="stat"><span class="n">11→47%</span><span class="t">Cloud-channel share of Anthropic revenue, 2023 to 2025 <a class="src" href="#s44">S44</a></span></div>
+      <div class="stat"><span class="n">20%</span><span class="t">OpenAI's revenue share to Microsoft through 2030, as reported; Microsoft says only that the percentage is unchanged and capped <a class="src" href="#s37">S37</a> <a class="src" href="#s47">S47</a></span></div>
+    </div>
+
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Door</th><th>Who collects from the buyer</th><th>What the platform takes</th><th>Who pays for inference</th><th>Disclosed by door?</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag blue">1</span><strong>Maker direct</strong></td><td>The lab</td><td>Nothing on the sale</td><td>The lab, to its compute suppliers, which include the same clouds</td><td>No</td></tr>
+            <tr><td><span class="tag purple">2</span><strong>Maker-run, platform-billed</strong></td><td>The cloud marketplace, in Claude Consumption Units <a class="src" href="#s36">S36</a></td><td>A marketplace or distribution fee</td><td>The lab, which operates the service on its own capacity <a class="src" href="#s3">S3</a></td><td>No</td></tr>
+            <tr><td><span class="tag green">3</span><strong>Platform-operated</strong></td><td>The cloud</td><td>A distribution fee or revenue share; one single-source report puts AWS's take near half of Anthropic's gross profit on AWS sales <a class="src" href="#s46">S46</a></td><td>The cloud, on hardware it chooses</td><td>No; the 16-cent figure blends AWS and Google and all door types</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="sub-h">The fifth role: shareholder</h3>
+    <p>The same clouds also mark up their stakes. Amazon's first-quarter 2026 net income included $16.8B of pre-tax gains from its Anthropic investments, more than half of its pre-tax income for the quarter, and Fortune reported that about $28.7B of Alphabet's record quarterly profit came from outside its products, a gain it tied to the same investment <a class="src" href="#s43">S43</a>. Amazon's second-quarter 10-Q records about $62.8B of upward adjustments to its Anthropic preferred stock for the first half of 2026 and puts the fair value of its remaining Anthropic notes at about $97.9B <a class="src" href="#s42">S42</a>.</p>
+    <p><strong>Reading.</strong> A hyperscaler can be paid on all three doors and on the lab's valuation at once: inference margin on Door 3, a fee on Door 2, compute rent when the lab sells on Door 1, and the equity mark underneath all of it. That is why clouds tolerate Door 2 and why they have little reason to close any door.</p>
+
+    <div class="fieldnote">
+      <div class="kicker">The split nobody publishes</div>
+      <p>No lab or cloud discloses revenue by door. The Reuters figures separate cloud-channel sales from direct sales but not Bedrock from Claude Platform on AWS, nor Foundry's two hosting options from each other <a class="src" href="#s44">S44</a>. The report that AWS takes about half of Anthropic's gross profit on AWS sales is single-sourced <a class="src" href="#s46">S46</a>. Treat every per-door margin claim in circulation as an estimate.</p>
+    </div>
+
+    <div class="panel" id="calc">
+      <div class="kicker">Interactive · illustrative</div>
+      <h3 class="sub-h">Price a workload, not a rate card</h3>
+      <p>Enter your model's list rates and monthly volume, then set what each path actually offers you. Example rates are placeholders, not any model's price.</p>
+      <div class="calc-grid">
+        <div class="field"><label for="c-pin">Input $ per 1M tokens</label><input type="number" id="c-pin" value="5" min="0" step="0.01"></div>
+        <div class="field"><label for="c-pout">Output $ per 1M tokens</label><input type="number" id="c-pout" value="25" min="0" step="0.01"></div>
+        <div class="field"><label for="c-tin">Input tokens per month (M)</label><input type="number" id="c-tin" value="2000" min="0" step="1"></div>
+        <div class="field"><label for="c-tout">Output tokens per month (M)</label><input type="number" id="c-tout" value="300" min="0" step="1"></div>
+        <div class="field"><label for="c-cache">Input served from cache (%)</label><input type="number" id="c-cache" value="40" min="0" max="100" step="1"></div>
+        <div class="field"><label for="c-mult">Cached-read price multiplier</label><input type="number" id="c-mult" value="0.1" min="0" step="0.01"></div>
+        <div class="field"><label for="c-bshare">Workload that can run as batch (%)</label><input type="number" id="c-bshare" value="20" min="0" max="100" step="1"></div>
+        <div class="field"><label for="c-bdisc">Batch discount (%)</label><input type="number" id="c-bdisc" value="50" min="0" max="100" step="1"></div>
+      </div>
+      <div class="tablewrap">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Per path</th><th><span class="tag blue">1</span> Claude API</th><th><span class="tag purple">2</span> Claude Platform on AWS</th><th><span class="tag green">3</span> Claude in Bedrock</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Batch available on this path</strong></td><td><input class="chk" type="checkbox" id="c-b1" checked aria-label="Batch available, Door 1"></td><td><input class="chk" type="checkbox" id="c-b2" checked aria-label="Batch available, Door 2"></td><td><input class="chk" type="checkbox" id="c-b3" aria-label="Batch available, Door 3"></td></tr>
+              <tr><td><strong>Endpoint premium (%)</strong></td><td><input type="number" id="c-p1" value="0" step="1" aria-label="Endpoint premium, Door 1"></td><td><input type="number" id="c-p2" value="0" step="1" aria-label="Endpoint premium, Door 2"></td><td><input type="number" id="c-p3" value="0" step="1" aria-label="Endpoint premium, Door 3"></td></tr>
+              <tr><td><strong>Negotiated discount or commit value (%)</strong></td><td><input type="number" id="c-d1" value="0" step="1" aria-label="Discount, Door 1"></td><td><input type="number" id="c-d2" value="0" step="1" aria-label="Discount, Door 2"></td><td><input type="number" id="c-d3" value="0" step="1" aria-label="Discount, Door 3"></td></tr>
+              <tr><td><strong>Platform fee on the seller side (%)</strong></td><td><input type="number" id="c-f1" value="0" step="1" aria-label="Platform fee, Door 1"></td><td><input type="number" id="c-f2" value="16" step="1" aria-label="Platform fee, Door 2"></td><td><input type="number" id="c-f3" value="16" step="1" aria-label="Platform fee, Door 3"></td></tr>
+              <tr><td><strong>Buyer's monthly cost</strong></td><td class="num" id="c-o1">–</td><td class="num" id="c-o2">–</td><td class="num" id="c-o3">–</td></tr>
+              <tr><td><strong>Versus Door 1</strong></td><td class="num" id="c-x1">–</td><td class="num" id="c-x2">–</td><td class="num" id="c-x3">–</td></tr>
+              <tr><td><strong>Maker keeps before compute (illustrative)</strong></td><td class="num" id="c-n1">–</td><td class="num" id="c-n2">–</td><td class="num" id="c-n3">–</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="fieldnote">
+        <div class="kicker">What the defaults assume, and what the model ignores</div>
+        <p>Batch is off for Bedrock because Anthropic's Message Batches API is not offered on Bedrock's Messages endpoint <a class="src" href="#s49">S49</a>; Bedrock runs its own batch inference for select models <a class="src" href="#s23">S23</a>, so tick the box if your model qualifies. Set the Bedrock premium to 10 for a regional endpoint, which costs 10% more than the global one <a class="src" href="#s49">S49</a>. The 16% seller-side fee is the blended 2025 figure from Reuters <a class="src" href="#s44">S44</a> applied to both platform doors because no per-door figure is public; it changes what the maker keeps, not what the buyer pays. Cache-write premiums, provisioned throughput, support plans and egress are left out. Use this to rank paths, then price the winner with the vendor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="samemodel" data-nav="Same model?">
+  <div class="wrap">
+    <div class="kicker">05 · Same model?</div>
+    <h2>Same weights, not always the same service.</h2>
+    <p class="sub">The headline of this note treats the model as the constant. In 2026 serving hardware, safeguards, retention, capacity and availability all vary by door, and sometimes by hosting option inside one door.</p>
+
+    <h3 class="sub-h">The door picks the hardware, and the hardware has its own failure modes</h3>
+    <p>Anthropic serves Claude through its own API, Bedrock and Google Cloud on three hardware platforms: AWS Trainium, NVIDIA GPUs and Google TPUs <a class="src" href="#s50">S50</a>. Its September 2025 postmortem shows what that means for a buyer. A routing error that sent short-context requests to servers configured for a 1M-token window reached 16% of Sonnet 4 requests in its worst hour, while misrouted traffic peaked at 0.18% of Sonnet 4 requests on Bedrock and stayed below 0.0004% on Vertex AI. A separate misconfiguration corrupted output on the Claude API's own TPU servers. The routing fix reached the first-party API and Vertex by 16 September and Bedrock by 18 September <a class="src" href="#s50">S50</a>. Same model, three exposure profiles, two fix dates.</p>
+
+    <h3 class="sub-h">One set of weights, several safeguard and access regimes</h3>
+    <p>Anthropic states that Claude Fable 5 and Fable 5.1 share the same underlying model as Claude Mythos 5 and Mythos 5.1, with additional safeguards in the cyber and bio domains <a class="src" href="#s52">S52</a>. On Bedrock, Fable models are open to all customers, Mythos 5 and 5.1 require verification, and Claude Mythos Preview is invitation-only through Project Glasswing, served from us-east-1 to an allowlisted, dedicated AWS account <a class="src" href="#s49">S49</a>. Foundry carries Fable and Mythos only in its Anthropic-hosted option, with Mythos Preview open to invited customers <a class="src" href="#s36">S36</a>. The door now decides which safety configuration of a model you can reach, not only who runs it.</p>
+
+    <h3 class="sub-h">Retention follows the model; where it is held follows the door</h3>
+    <p>For covered models, the Mythos class and successors Anthropic designates, prompts and outputs are retained for 30 days on every platform where the models are offered, effective 9 June 2026. Organizations with zero data retention must turn retention on to use them unless Anthropic notifies them that they are eligible to keep ZDR <a class="src" href="#s52">S52</a>. Where the retained data sits differs by door: with Anthropic for the Claude API and Claude Platform on AWS, inside AWS for Bedrock, inside Google Cloud for Agent Platform, and in a separate Azure subscription for Foundry customers whose main subscription is configured for ZDR <a class="src" href="#s52">S52</a>. A contract that says "zero data retention" without naming the model is incomplete.</p>
+
+    <h3 class="sub-h">Capacity and quotas are per door</h3>
+    <p>Claude Platform on AWS draws on a capacity pool separate from both the first-party API and Bedrock <a class="src" href="#s3">S3</a>. Bedrock's Messages endpoint defaults to 2 million input tokens per minute and allows up to 5 million input and 500,000 output tokens per minute without Anthropic's approval, with request-rate limits set by AWS <a class="src" href="#s49">S49</a>. Foundry responses omit Anthropic's rate-limit headers; limits are managed in Azure <a class="src" href="#s36">S36</a>. A launch-week capacity squeeze on one door says little about the others.</p>
+
+    <h3 class="sub-h">Availability is a door attribute too</h3>
+    <p>On 12 June 2026 Anthropic received a US export-control directive to suspend access to Fable 5 and Mythos 5 by any foreign national. Anthropic said the practical effect was that it had to disable both models for all customers, while access to its other models was unaffected; it complied and stated that it disagreed with the basis for the directive <a class="src" href="#s51">S51</a>. Mythos 5 access was restored to a set of vetted US organizations on 26 June, the Commerce Department lifted the controls on 30 June, and Fable 5 returned on Anthropic's own surfaces on 1 July, with the cloud platforms to follow <a class="src" href="#s53">S53</a>. A hands-on test found Bedrock serving Fable 5 again on 1 July through its US cross-region profile, with the global profile not yet responding <a class="src" href="#s54">S54</a>.</p>
+
+    <div class="warning">
+      <div class="kicker">Reading</div>
+      <p>The suspension reached every door at once; the restoration did not. A buyer with a tested second path to the same model could resume on whichever door returned first. Resilience is now a reason to hold more than one door, alongside cost and features.</p>
+    </div>
+
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Attribute of one model</th><th>Door 1</th><th>Door 2</th><th>Door 3</th><th>Sources</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Serving hardware</strong></td><td>Maker's mix of Trainium, GPU and TPU</td><td>Maker's mix; Azure hardware for Foundry's Azure-hosted option</td><td>Platform's choice</td><td><a class="src" href="#s50">S50</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><strong>Safeguard configuration and access tier</strong></td><td>Maker's tiers</td><td>Maker's tiers; some models only in the maker-hosted option</td><td>Platform sets access criteria per model, including verification and invitation</td><td><a class="src" href="#s52">S52</a> <a class="src" href="#s36">S36</a> <a class="src" href="#s49">S49</a></td></tr>
+            <tr><td><strong>Where covered-model retention is held</strong></td><td>Anthropic</td><td>Anthropic on Claude Platform on AWS; a separate Azure subscription on Foundry if ZDR is configured</td><td>Inside the cloud provider</td><td><a class="src" href="#s52">S52</a></td></tr>
+            <tr><td><strong>Capacity</strong></td><td>First-party pool</td><td>Separate pool on Claude Platform on AWS</td><td>Platform quotas</td><td><a class="src" href="#s3">S3</a> <a class="src" href="#s49">S49</a></td></tr>
+            <tr><td><strong>Return after the June 2026 suspension</strong></td><td>1 July</td><td>No per-path date found</td><td>Bedrock 1 July per a hands-on test; others undated in sources checked</td><td><a class="src" href="#s53">S53</a> <a class="src" href="#s54">S54</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools" data-nav="Tools">
+  <div class="wrap">
+    <div class="kicker">06 · Tools and agent state</div>
+    <h2>The door covers the call, not the turn.</h2>
+    <p class="sub">An agent turn is a model call plus the tools it invokes, the files it reads and the state it keeps. Each has an operator, and it need not be the model's.</p>
+
+    <p>On the doors that carry the maker's server-side tools, the maker runs them: web search and fetch, code execution, Agent Skills, the Files API and the MCP connector all run on Anthropic's side on the Claude API and Claude Platform on AWS <a class="src" href="#s48">S48</a>. On Bedrock's Messages endpoint none of them run <a class="src" href="#s49">S49</a>, so an agent built there supplies its own search, sandbox and connectors, each with its own operator, region and terms. Foundry's Azure-hosted option sits in between: only the basic versions of web search and fetch, and requests for code execution, Skills or Files return an error by design <a class="src" href="#s36">S36</a>.</p>
+    <p>Retention can change with the feature on the same door. Anthropic lists code execution, Agent Skills, the MCP connector, the Files API and batch processing as not eligible for zero data retention, while prompt caching, the memory tool and web search without dynamic filtering are eligible <a class="src" href="#s48">S48</a>. Switching on a tool can take a workload out of a ZDR arrangement without changing the door.</p>
+    <p><strong>Reading.</strong> A cached prompt prefix is held by whichever party operates inference for the life of the cache, five minutes or an hour <a class="src" href="#s48">S48</a>. "Prompts stay in the perimeter" has a time dimension as well as a location.</p>
+
+    <h3 class="sub-h">Where agent state lives is the next door decision</h3>
+    <p>Claude Managed Agents, Anthropic's hosted agent runtime, is available only on the direct API and Claude Platform on AWS <a class="src" href="#s73">S73</a>, so sessions and agent memory on that runtime sit with Anthropic even when the bill is AWS's. OpenAI took the other route on AWS: its Stateful Runtime Environment is being built jointly with Amazon and served through Bedrock <a class="src" href="#s38">S38</a>, and Bedrock's managed agents are now described as powered by OpenAI <a class="src" href="#s70">S70</a>. Two labs, one cloud, opposite answers to where an agent's state is kept.</p>
+    <p><strong>Reading.</strong> Models are replaced every few months; an agent's accumulated state (memory, files, traces, tool credentials) is not. The door question is moving from "who runs the model" to "who holds the state the model works on." <a href="https://ponelson.github.io/worldmodels/" target="_blank" rel="noopener">World Models</a> makes the same argument for physical AI, where the durable world-state store is the role nobody yet owns; <a href="https://ponelson.github.io/agenticmemory2026/" target="_blank" rel="noopener">Agentic Memory 2026</a> covers the enterprise version.</p>
+
+    <h3 class="sub-h">The checklist, extended to every component of a turn</h3>
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Component</th><th>Who operates it</th><th>Retention and ZDR</th><th>What to get in writing</th><th>Sources</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Model call</strong></td><td>The door's operator</td><td>Per model and door; covered models retain 30 days</td><td>The thirteen fields in section 12</td><td><a class="src" href="#s52">S52</a></td></tr>
+            <tr><td><strong>Server-side tools</strong> (search, fetch, code execution)</td><td>The maker on the API, Claude Platform on AWS and Foundry's Anthropic-hosted option; not offered on Bedrock</td><td>Code execution not ZDR eligible; search and fetch eligible without dynamic filtering</td><td>Tool version (basic or current), processing region, which search provider is used</td><td><a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><strong>Client-side tools and MCP servers</strong></td><td>You, or whoever runs the server</td><td>The server owner's terms</td><td>Operator, data path, authentication, logging</td><td><a class="src" href="#s48">S48</a></td></tr>
+            <tr><td><strong>Files and Skills</strong></td><td>The maker, where offered</td><td>Not ZDR eligible</td><td>Storage location, deletion on request, retention clock</td><td><a class="src" href="#s48">S48</a></td></tr>
+            <tr><td><strong>Agent runtime and memory</strong></td><td>The maker (Claude Managed Agents) or the platform (OpenAI's runtime on Bedrock)</td><td>Per runtime terms</td><td>Export format, portability, who can read session state</td><td><a class="src" href="#s73">S73</a> <a class="src" href="#s38">S38</a></td></tr>
+            <tr><td><strong>Prompt cache</strong></td><td>The inference operator</td><td>Five minutes or one hour; ZDR eligible</td><td>Cache location when global endpoints route across regions</td><td><a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fieldnote">
+      <div class="kicker">Disclosure</div>
+      <p>The author is head of corporate development at Qumulo, a data platform company with a commercial interest in where enterprise data and agent state are stored. The agent-state argument above is labeled as a reading for that reason.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="map" data-nav="2026 map">
+  <div class="wrap">
+    <div class="kicker">07 · Exclusivity ended</div>
+    <h2>Model exclusivity no longer defines the cloud market.</h2>
+    <p class="sub">The 2026 sequence that moved the competitive question from "which cloud has which model" to "which door, on what terms."</p>
+
+    <div class="tablewrap">
+      <div class="table-scroll" data-tall="1">
+        <table>
+          <thead><tr><th>Date</th><th>Event</th><th>Why it matters</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Oct 2025</strong></td><td>OpenAI recapitalizes; Microsoft keeps exclusive rights to OpenAI IP and models until an AGI determination, loses its compute right of first refusal, and gains a $250B Azure commitment</td><td>Exclusivity narrowed, not ended</td><td><a class="src" href="#s74">S74</a></td></tr>
+            <tr><td><strong>Nov 2025</strong></td><td>OpenAI signs a reported $38B, seven-year compute commitment with AWS</td><td>A capacity purchase; it did not by itself move distribution (see 27 Feb and 27 Apr)</td><td><a class="src" href="#s16">S16</a> <a class="src" href="#s38">S38</a></td></tr>
+            <tr><td><strong>18 Nov 2025</strong></td><td>Microsoft and NVIDIA commit up to $5B and $10B to Anthropic; Anthropic commits $30B to Azure compute</td><td>The deal behind Claude in Foundry</td><td><a class="src" href="#s39">S39</a></td></tr>
+            <tr><td><strong>5 Feb 2026</strong></td><td>OpenAI launches Frontier, an agent-management platform that also manages non-OpenAI agents</td><td>Lab moves up-stack into the clouds' governance pitch</td><td><a class="src" href="#s17">S17</a> <a class="src" href="#s18">S18</a></td></tr>
+            <tr><td><strong>27 Feb 2026</strong></td><td>Amazon agrees to invest $50B in OpenAI; AWS becomes the exclusive third-party distributor for OpenAI Frontier; the AWS compute deal grows by $100B</td><td>A shareholder relationship comes before the distribution right</td><td><a class="src" href="#s38">S38</a></td></tr>
+            <tr><td><strong>Apr 2026</strong></td><td>Google renames Vertex AI the Gemini Enterprise Agent Platform at Cloud Next; the API endpoint is unchanged</td><td>Cloud reframes from model catalog to agent platform</td><td><a class="src" href="#s20">S20</a> <a class="src" href="#s21">S21</a></td></tr>
+            <tr><td><strong>20 Apr 2026</strong></td><td>Amazon adds $5B, and up to $20B more, to Anthropic; Anthropic commits more than $100B to AWS; Claude Platform on AWS announced</td><td>Door 2 on AWS is born inside an equity deal</td><td><a class="src" href="#s40">S40</a></td></tr>
+            <tr><td><strong>24 Apr 2026</strong></td><td>Google commits up to $40B to Anthropic</td><td>Amazon, Google and Microsoft all hold Anthropic equity or investment commitments</td><td><a class="src" href="#s41">S41</a></td></tr>
+            <tr><td><strong>27 Apr 2026</strong></td><td>Microsoft's license to OpenAI IP becomes non-exclusive; OpenAI may serve all its products on any cloud; Azure stays primary and ships first</td><td>The legal change behind GPT on Bedrock</td><td><a class="src" href="#s37">S37</a></td></tr>
+            <tr><td><strong>28 Apr 2026</strong></td><td>GPT-5.5 and GPT-5.4 enter Bedrock in limited availability</td><td>The day after the amendment; Azure stops being the only hyperscaler hosting OpenAI frontier models and remains the primary partner</td><td><a class="src" href="#s16">S16</a></td></tr>
+            <tr><td><strong>11 May 2026</strong></td><td>Claude Platform on AWS launches</td><td>First mainstream Door 2 offering</td><td><a class="src" href="#s4">S4</a></td></tr>
+            <tr><td><strong>1 Jun 2026</strong></td><td>GPT-5.5, GPT-5.4 and Codex GA on Bedrock at base list-price parity</td><td>Parity pricing plus commit drawdown</td><td><a class="src" href="#s12">S12</a></td></tr>
+            <tr><td><strong>Build 2026</strong></td><td>Seven MAI models added to Foundry in private preview, with wider availability planned on OpenRouter, Fireworks and Baseten</td><td>Microsoft competes as a lab inside its own catalog and outside it</td><td><a class="src" href="#s11">S11</a></td></tr>
+            <tr><td><strong>9 Jun 2026</strong></td><td>Claude Fable 5 launches; Anthropic's 30-day retention rule for covered models takes effect on every platform</td><td>Retention becomes a property of the model, not only the door</td><td><a class="src" href="#s52">S52</a></td></tr>
+            <tr><td><strong>12 Jun 2026</strong></td><td>A US export-control directive leads Anthropic to disable Fable 5 and Mythos 5 for all customers</td><td>Availability shuts on every door at once</td><td><a class="src" href="#s51">S51</a></td></tr>
+            <tr><td><strong>29 Jun 2026</strong></td><td>Claude GA in Foundry with an Azure-hosted option</td><td>Anthropic-operated on Azure infrastructure, prompts kept in Azure: Door 2, not Door 3</td><td><a class="src" href="#s9">S9</a> <a class="src" href="#s10">S10</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><strong>1 Jul 2026</strong></td><td>Fable 5 returns on Anthropic's surfaces after the controls are lifted; a hands-on test finds it live on Bedrock the same day</td><td>Restoration runs maker-first</td><td><a class="src" href="#s53">S53</a> <a class="src" href="#s54">S54</a></td></tr>
+            <tr><td><strong>9 Jul 2026</strong></td><td>GPT-5.6 Sol, Terra and Luna GA on Bedrock</td><td>Bedrock tracks new OpenAI model families, not only legacy ones</td><td><a class="src" href="#s13">S13</a></td></tr>
+            <tr><td><strong>8 Sep 2026</strong></td><td>GPT-6 Astra GA on Bedrock; ChatGPT Work and Codex can be pointed at Bedrock inference</td><td>Lab applications running on a rival cloud's serving stack</td><td><a class="src" href="#s14">S14</a></td></tr>
+            <tr><td><strong>29 Sep 2026</strong></td><td>Reuters reports Anthropic's confidential IPO filing: 47% of 2025 revenue came through AWS and Google</td><td>The first public look at channel economics</td><td><a class="src" href="#s44">S44</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p>The 8 September row is the one to watch. When a lab's own application can be configured to run inference through a cloud platform, the split between "lab product" and "cloud platform" stops following company lines. The lab keeps the user interface and the agent logic; the cloud keeps the data path and the bill. Coverage is still uneven: this note found no evidence of OpenAI's proprietary frontier models being served by Google Cloud, so "every model on every cloud" would overstate the position.</p>
+  </div>
+</section>
+
+<section class="section" id="lineage" data-nav="Lineage">
+  <div class="wrap">
+    <div class="kicker">08 · Lineage</div>
+    <h2>Hosting someone else's product is an old fight.</h2>
+    <p class="sub">The 2026 doors replay two older patterns: the studio's release window, and the open-source vendor's license war with the clouds that hosted its software.</p>
+
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Date</th><th>Event</th><th>What it set up</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td><strong>2019</strong></td><td>Microsoft invests $1B in OpenAI and becomes its exclusive cloud</td><td>The single-door model the 2026 amendment unwound</td><td><a class="src" href="#s16">S16</a></td></tr>
+            <tr><td><strong>Early 2021</strong></td><td>Elastic moves Elasticsearch from Apache 2.0 to SSPL and the Elastic License (both source-available, not OSI open source), citing AWS's competing hosted service</td><td>A maker using its license to control who may run its product as a service</td><td><a class="src" href="#s64">S64</a></td></tr>
+            <tr><td><strong>Apr 2021</strong></td><td>AWS forks Elasticsearch as OpenSearch (open source)</td><td>The platform's answer: run its own copy</td><td><a class="src" href="#s64">S64</a></td></tr>
+            <tr><td><strong>Jul 2023</strong></td><td>Meta releases Llama 2 as open weights under a license that requires any licensee above 700 million monthly active users to request a separate license</td><td>An open-weight release that still reserves the largest platforms for negotiation</td><td><a class="src" href="#s65">S65</a></td></tr>
+            <tr><td><strong>Q3 2023</strong></td><td>Amazon begins investing in Anthropic through convertible notes, $8.0B by Q4 2025</td><td>Equity as the first step toward a distribution relationship</td><td><a class="src" href="#s71">S71</a></td></tr>
+            <tr><td><strong>Aug 2024</strong></td><td>Elastic adds AGPL, making Elasticsearch open source again; its founder says the fork resolved the conflict with AWS</td><td>A truce once the platform had its own product</td><td><a class="src" href="#s63">S63</a></td></tr>
+            <tr><td><strong>Oct 2025</strong></td><td>OpenAI's recapitalization narrows Microsoft's exclusivity and removes its compute right of first refusal</td><td>The opening for multi-cloud OpenAI</td><td><a class="src" href="#s74">S74</a></td></tr>
+            <tr><td><strong>2026</strong></td><td>See the timeline in section 07</td><td>Every major lab on every major cloud, through different doors</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="sub-h">Release windows</h3>
+    <p><strong>Reading.</strong> A studio sells a film first where it keeps the most margin and controls the experience, then licenses it down a sequence of windows (the mechanics are in <a href="https://ponelson.github.io/hollywoodaccounting/" target="_blank" rel="noopener">Hollywood Accounting</a>). Labs now do the same with capabilities: features ship on the maker's API, then on the maker-run cloud door, then later or never on the cloud-operated door (section 03). The gap between doors is not a lag waiting to be closed. It is the release strategy, and its length is a negotiated term. The July 2026 restoration ran in the same order: the maker's own surfaces first, the clouds after (section 05).</p>
+    <p>Door 2 has a music-industry analogue as well: a label that keeps its catalog and its artists but ships through a major's distribution and billing (the structure is in <a href="https://ponelson.github.io/music" target="_blank" rel="noopener">Music</a>). The lab keeps the product and the customer relationship; the cloud supplies the storefront, the identity system and the invoice.</p>
+
+    <h3 class="sub-h">Licenses and contracts as door control</h3>
+    <p><strong>Reading.</strong> Open-source vendors who could not control the doors through distribution contracts used licenses instead: Elastic's SSPL, and Meta's 700-million-user clause aimed squarely at the largest platforms. Proprietary labs control their doors through distribution agreements and equity, which is why section 04 says more about where a model will be available next year than any catalog page does.</p>
+  </div>
+</section>
+
+<section class="section" id="landscape" data-nav="Landscape">
+  <div class="wrap">
+    <div class="kicker">09 · Who is where</div>
+    <h2>Seven kinds of provider, one filter.</h2>
+    <p class="sub">The source notes' categories plus the labs, applications and regional platforms, checked against vendor documentation as of October 2026 except where a row says otherwise. Open-source and open-weight status is marked where it applies.</p>
+
+    <div class="chiprow" id="filters" role="group" aria-label="Filter providers by category">
+      <button class="chip active" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-filter="lab" aria-pressed="false">Frontier labs</button>
+      <button class="chip" type="button" data-filter="cloud" aria-pressed="false">Hyperscale clouds</button>
+      <button class="chip" type="button" data-filter="data" aria-pressed="false">Data platforms</button>
+      <button class="chip" type="button" data-filter="infer" aria-pressed="false">Inference clouds</button>
+      <button class="chip" type="button" data-filter="gateway" aria-pressed="false">Gateways</button>
+      <button class="chip" type="button" data-filter="app" aria-pressed="false">Applications</button>
+      <button class="chip" type="button" data-filter="regional" aria-pressed="false">Regional</button>
+    </div>
+
+    <div class="tablewrap">
+      <div class="table-scroll" data-tall="1">
+        <table>
+          <thead><tr><th>Provider</th><th>Category</th><th>What it offers</th><th>Choose it when</th><th>Sources</th></tr></thead>
+          <tbody>
+            <tr data-cat="lab"><td><strong>Anthropic</strong></td><td><span class="tag blue">Lab</span></td><td>Claude API and Claude Platform, Managed Agents, Agent Skills, code execution; Claude Enterprise, Claude Code, Claude Cowork; sold through all three hyperscalers, Anthropic-operated on AWS (Claude Platform on AWS) and Azure (Foundry), platform-operated on Bedrock and Google Cloud</td><td>You need Claude's newest agent features on day one or a direct relationship</td><td><a class="src" href="#s3">S3</a> <a class="src" href="#s36">S36</a> <a class="src" href="#s48">S48</a></td></tr>
+            <tr data-cat="lab"><td><strong>OpenAI</strong></td><td><span class="tag blue">Lab</span></td><td>API, ChatGPT Enterprise and ChatGPT Work, Codex, Frontier agent platform with forward-deployed engineers; gpt-oss models (open-weight, Apache 2.0)</td><td>You want OpenAI's application suite or Frontier's agent management</td><td><a class="src" href="#s17">S17</a> <a class="src" href="#s14">S14</a></td></tr>
+            <tr data-cat="lab"><td><strong>Google DeepMind</strong></td><td><span class="tag blue">Lab</span></td><td>Gemini models through Google AI Studio and the Gemini API; Gemma models (open-weight, Gemma terms of use)</td><td>Developer access to Gemini without the full Google Cloud estate</td><td><a class="src" href="#s11">S11</a> <a class="src" href="#s19">S19</a></td></tr>
+            <tr data-cat="lab"><td><strong>Mistral AI</strong></td><td><span class="tag blue">Lab</span></td><td>La Plateforme API; a mix of premier and open models, several open-weight under Apache 2.0 (for example Mistral Small 4)</td><td>European provider preference or self-hosting open weights</td><td><a class="src" href="#s35">S35</a></td></tr>
+            <tr data-cat="cloud"><td><strong>Amazon Bedrock</strong></td><td><span class="tag green">Cloud</span></td><td>Anthropic, OpenAI (GPT-5.x, GPT-6 Astra, Codex), Amazon Nova, Meta Llama (open-weight, Meta community license, not OSI open source), Mistral, DeepSeek, Cohere, AI21, MiniMax, Gemma; Guardrails, Knowledge Bases, AgentCore; a Stateful Runtime Environment and managed agents built with OpenAI</td><td>AWS as sole processor, AWS compliance programs for in-scope models, AWS commit drawdown</td><td><a class="src" href="#s22">S22</a> <a class="src" href="#s14">S14</a> <a class="src" href="#s4">S4</a> <a class="src" href="#s38">S38</a> <a class="src" href="#s70">S70</a></td></tr>
+            <tr data-cat="cloud"><td><strong>Microsoft Foundry</strong> (formerly Azure AI Foundry)</td><td><span class="tag green">Cloud</span></td><td>OpenAI (platform-operated), Anthropic (Anthropic-operated in both hosting options), Meta, Mistral, DeepSeek, xAI, Cohere, Hugging Face, NVIDIA, Fireworks; first-party MAI models in preview; Foundry Agent Service, Foundry IQ</td><td>Microsoft-centric identity, procurement and consumption commitments</td><td><a class="src" href="#s10">S10</a> <a class="src" href="#s8">S8</a> <a class="src" href="#s36">S36</a> <a class="src" href="#s11">S11</a></td></tr>
+            <tr data-cat="cloud"><td><strong>Gemini Enterprise Agent Platform</strong> (formerly Vertex AI)</td><td><span class="tag green">Cloud</span></td><td>Model Garden with Gemini, Claude (Google-operated), Gemma and 200+ models; Agent Garden, ADK (open source), MCP server registry, RAG Engine, Vector Search</td><td>Gemini-first estates, BigQuery-adjacent data, agent building on Google Cloud</td><td><a class="src" href="#s19">S19</a> <a class="src" href="#s20">S20</a> <a class="src" href="#s48">S48</a></td></tr>
+            <tr data-cat="cloud"><td><strong>Oracle OCI Generative AI</strong></td><td><span class="tag green">Cloud</span></td><td>Cohere (Oracle is an investor), Meta Llama (open-weight, not OSI open source), xAI Grok through an "xAI platform for OCI", Google Gemini through a "Google Vertex AI Platform for OCI", OpenAI gpt-oss (open-weight, Apache 2.0); dedicated AI clusters</td><td>Oracle-estate workloads. The release notes' naming suggests the makers' platforms serve Grok and Gemini; this note has not confirmed the operator per model</td><td><a class="src" href="#s60">S60</a> <a class="src" href="#s76">S76</a></td></tr>
+            <tr data-cat="cloud"><td><strong>IBM watsonx and IBM software</strong></td><td><span class="tag green">Cloud</span></td><td>Granite models (open source, Apache 2.0) alongside third-party models; Claude integrated into select IBM software from October 2025, starting with Project Bob (IBM's AI-first IDE)</td><td>IBM-estate modernization work; confirm which provider serves Claude inside each IBM product</td><td><a class="src" href="#s75">S75</a></td></tr>
+            <tr data-cat="data"><td><strong>Snowflake Cortex AI</strong></td><td><span class="tag">Data platform</span></td><td>Model calls from SQL and Python inside Snowflake; open models self-hosted on Snowflake GPUs, while OpenAI, Anthropic and Gemini models run on cloud-provider infrastructure; many frontier models require cross-region inference</td><td>The data already lives in Snowflake and governance should stay there</td><td><a class="src" href="#s26">S26</a> <a class="src" href="#s24">S24</a> <a class="src" href="#s25">S25</a></td></tr>
+            <tr data-cat="data"><td><strong>Databricks Mosaic AI</strong></td><td><span class="tag">Data platform</span></td><td>Model Serving with Databricks-hosted Foundation Model APIs and external models behind one OpenAI-compatible API; requests routed through Unity AI Gateway (Beta) for rate limits, budgets and guardrails; MLflow (open source)</td><td>Lakehouse-resident data and an existing Databricks governance model</td><td><a class="src" href="#s27">S27</a></td></tr>
+            <tr data-cat="infer"><td><strong>Together AI</strong></td><td><span class="tag orange">Inference cloud</span></td><td>Serverless inference, dedicated endpoints, batch, fine-tuning and GPU clusters, mainly for open-weight models, behind an OpenAI-compatible API</td><td>Cost per token and latency on open-weight models matter more than a hyperscaler perimeter</td><td><a class="src" href="#s28">S28</a></td></tr>
+            <tr data-cat="infer"><td><strong>Fireworks AI, Baseten</strong></td><td><span class="tag orange">Inference cloud</span></td><td>Inference platforms for open-weight and partner models; both named as planned distribution points for Microsoft's MAI models</td><td>As above; confirm model coverage and data terms per provider</td><td><a class="src" href="#s11">S11</a></td></tr>
+            <tr data-cat="infer"><td><strong>GroqCloud</strong></td><td><span class="tag orange">Inference cloud</span></td><td>LPU-based low-latency inference; after Nvidia's roughly $20B non-exclusive license and hiring of Groq's founder (Dec 2025), Groq operates independently as an inference cloud and is adding Nvidia systems</td><td>Real-time streaming on supported open-weight models; check model coverage, which some customers report narrowed after the deal</td><td><a class="src" href="#s32">S32</a> <a class="src" href="#s33">S33</a> <a class="src" href="#s34">S34</a></td></tr>
+            <tr data-cat="infer"><td><strong>Hugging Face Inference Endpoints</strong></td><td><span class="tag orange">Inference cloud</span></td><td>Dedicated deployments of Hub models on customer-chosen AWS, Azure or Google Cloud instances, using open-source inference engines (vLLM, TGI, SGLang, llama.cpp)</td><td>You want a specific open model on dedicated compute quickly</td><td><a class="src" href="#s29">S29</a> <a class="src" href="#s30">S30</a></td></tr>
+            <tr data-cat="gateway"><td><strong>OpenRouter</strong></td><td><span class="tag">Gateway</span></td><td>One API across many models; load-balances each request across upstream providers, with fallbacks on by default and controls to pin providers or deny data-collecting ones</td><td>Prototyping and multi-model routing; pin the provider when the operator matters</td><td><a class="src" href="#s31">S31</a></td></tr>
+            <tr data-cat="app"><td><strong>GitHub Copilot</strong></td><td><span class="tag">Application</span></td><td>Claude models served from AWS, Anthropic and Google Cloud; OpenAI models from OpenAI and GitHub's Azure tenant; Gemini on Google Cloud; Grok on xAI; free-plan inline suggestions on Fireworks AI</td><td>You accept the vendor's choice of operator per request; check the hosting page for your plan</td><td><a class="src" href="#s56">S56</a></td></tr>
+            <tr data-cat="app"><td><strong>Microsoft 365 Copilot</strong></td><td><span class="tag">Application</span></td><td>Claude enabled by default in commercial tenants from January 2026, with Anthropic as a Microsoft subprocessor; Claude traffic processed on Anthropic's servers in AWS or Google Cloud, outside the EU Data Boundary</td><td>Microsoft-centric work where admins have reviewed the subprocessor and residency terms</td><td><a class="src" href="#s57">S57</a> <a class="src" href="#s58">S58</a></td></tr>
+            <tr data-cat="app"><td><strong>Salesforce Agentforce</strong></td><td><span class="tag">Application</span></td><td>Claude through Amazon Bedrock inside Salesforce's trust boundary, with Claude traffic contained in Salesforce's virtual private cloud</td><td>Regulated CRM workloads that should not leave the Salesforce environment</td><td><a class="src" href="#s59">S59</a></td></tr>
+            <tr data-cat="regional"><td><strong>China's platforms</strong></td><td><span class="tag">Regional</span></td><td>Alibaba Cloud Model Studio (Qwen; many models open-weight under Apache 2.0), Baidu AI Cloud Qianfan (ERNIE), ByteDance Volcano Engine (Doubao). US frontier labs do not serve China, and Anthropic also bars entities majority-owned from unsupported regions wherever they operate. Not re-verified against vendor documentation for v2.0</td><td>Workloads that must run inside China</td><td><a class="src" href="#s61">S61</a> <a class="src" href="#s62">S62</a></td></tr>
+            <tr data-cat="regional"><td><strong>In-region and sovereign offers</strong></td><td><span class="tag">Regional</span></td><td>In-region deployments of the platforms above, such as Bedrock's EU, JP and AU inference profiles and Foundry's US Data Zone deployments</td><td>Residency rules that a global endpoint cannot meet</td><td><a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>Tag colors hold throughout: blue for maker-direct, purple for maker-run through a platform (Door 2), green for platform-operated clouds, amber for independent inference clouds, neutral grey for data platforms, gateways, applications and regional platforms.</p>
+  </div>
+</section>
+
+<section class="section" id="axes" data-nav="Two axes">
+  <div class="wrap">
+    <div class="kicker">10 · Doors are not provider types</div>
+    <h2>The two classifications are orthogonal.</h2>
+    <p class="sub">The doors describe a delivery arrangement for one model on one path. The five categories describe businesses. Most businesses sit behind more than one door.</p>
+
+    <p>Reading the landscape table as a list of doors produces errors. Snowflake is a data platform, but a Claude call from Cortex is served on cloud-provider infrastructure, not on Snowflake GPUs <a class="src" href="#s26">S26</a>. OpenRouter is a gateway, so it adds no door of its own: the door is whichever upstream provider served that request, and by default that can change between requests <a class="src" href="#s31">S31</a>. The matrix below shows where each business type appears.</p>
+
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Provider type</th><th>Door 1 · maker direct</th><th>Door 2 · maker-run, platform-billed</th><th>Door 3 · platform-operated</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Frontier labs</strong></td><td><span class="tag blue">Core</span> Own APIs and apps</td><td><span class="tag purple">Operator</span> Runs the service behind a cloud's front door (Claude Platform on AWS; Claude in Foundry, including the Azure-hosted option)</td><td><span class="tag">Supplier</span> Model served by someone else's stack</td></tr>
+            <tr><td><strong>Hyperscale clouds</strong></td><td><span class="tag blue">Own models</span> Gemini, MAI, Nova on their maker's cloud</td><td><span class="tag purple">Front door</span> Provides IAM, audit and billing, and on Azure the hardware; does not operate</td><td><span class="tag green">Core</span> Bedrock, Google Cloud's Agent Platform, Azure OpenAI in Foundry</td></tr>
+            <tr><td><strong>Data platforms</strong></td><td><span class="tag blue">Own models</span> Platform-built models on its own GPUs</td><td><span class="tag">Not observed</span></td><td><span class="tag green">Split</span> Open models on platform GPUs; frontier models operated by a hyperscaler underneath, possibly cross-region</td></tr>
+            <tr><td><strong>Inference clouds</strong></td><td><span class="tag">Rare</span></td><td><span class="tag">Not observed</span></td><td><span class="tag green">Core</span> Operate open-weight models on own or rented GPUs; Hugging Face runs on the hyperscaler the customer picks</td></tr>
+            <tr><td><strong>Gateways</strong></td><td colspan="3"><span class="tag">None of their own</span> Route to an upstream operator in any door; the operator can vary per request unless pinned and fallbacks are disabled</td></tr>
+            <tr><td><strong>Applications</strong></td><td colspan="3"><span class="tag">Vendor's choice</span> The application vendor picks the door: GitHub Copilot spreads Claude across AWS, Anthropic and Google Cloud <a class="src" href="#s56">S56</a>; Microsoft 365 Copilot sends Claude traffic to Anthropic as a subprocessor <a class="src" href="#s57">S57</a>; Agentforce uses Bedrock inside Salesforce's virtual private cloud <a class="src" href="#s59">S59</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fieldnote">
+      <div class="kicker">Reading the matrix</div>
+      <p>"Not observed" means this note found no documented instance as of October 2026, not that the arrangement is impossible. The practical rule: classify the path, not the vendor. The same vendor can put one workload behind Door 1 and another behind Door 3.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="choosing" data-nav="Choosing">
+  <div class="wrap">
+    <div class="kicker">11 · Decision guide</div>
+    <h2>Match the door to the requirement that cannot bend.</h2>
+    <p class="sub">Most enterprises will use more than one door. The useful move is naming which requirement governs each workload.</p>
+
+    <div class="tablewrap">
+      <div class="table-scroll" data-tall="1">
+        <table>
+          <thead><tr><th>If the binding requirement is</th><th>Door</th><th>Reason and qualifier</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Cloud as sole data processor; FedRAMP High, IL5 or HIPAA under the cloud's programs</strong></td><td><span class="tag green">3</span></td><td>Only platform-operated inference can inherit the cloud's attestations, and only where the specific model, region, endpoint type and configuration are listed as in scope. Verify against the cloud's in-scope services list and your agreements (a BAA for HIPAA, for example) before relying on it. On Azure, Claude has no platform-operated path: both Foundry options are Anthropic-operated <a class="src" href="#s36">S36</a>.</td></tr>
+            <tr><td><strong>Day-one agent features, betas, maker console and evals</strong></td><td><span class="tag blue">1</span> <span class="tag purple">2</span></td><td>Labs ship to their own surface first; Door 2 adds cloud IAM and billing but not cloud compliance cover <a class="src" href="#s48">S48</a> <a class="src" href="#s73">S73</a></td></tr>
+            <tr><td><strong>Drawing down an existing cloud commitment</strong></td><td><span class="tag green">3</span> <span class="tag purple">2</span></td><td>Both bill through the cloud. Claude Platform on AWS retires AWS commitments <a class="src" href="#s55">S55</a>; Claude in Foundry counts toward Azure consumption commitments for eligible customers <a class="src" href="#s10">S10</a> but not toward Agent Commit Units <a class="src" href="#s69">S69</a>. Confirm per model</td></tr>
+            <tr><td><strong>One agent platform spanning AWS, Azure and Google Cloud</strong></td><td><span class="tag blue">1</span></td><td>The direct API treats every environment the same; each cloud door has its own authentication, model identifiers and feature set <a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><strong>Many labs under one governance plane</strong></td><td><span class="tag green">3</span></td><td>Catalog breadth plus shared guardrails, logging and IAM is the cloud's core offer; coverage of each control still varies by model</td></tr>
+            <tr><td><strong>Data must not leave the warehouse or lakehouse governance</strong></td><td><span class="tag">Data platform</span></td><td>Governance stays in the platform, but the prompt may still be processed by a hyperscaler and, with cross-region inference enabled, outside the account's region <a class="src" href="#s24">S24</a></td></tr>
+            <tr><td><strong>Lowest cost or latency on open-weight models</strong></td><td><span class="tag orange">Inference cloud</span></td><td>Specialists compete on tokens per second and price; check their own attestations, which are not the hyperscalers'</td></tr>
+            <tr><td><strong>Roadmap influence and embedded engineering help</strong></td><td><span class="tag blue">1</span></td><td>Forward-deployed engineering and escalation paths sit with the lab <a class="src" href="#s17">S17</a></td></tr>
+            <tr><td><strong>Covered (Mythos-class) models under a zero-data-retention policy</strong></td><td><span class="tag">By retention location</span></td><td>30-day retention applies on every platform unless your organization is notified that it may keep ZDR; pick the door by where retained data may sit <a class="src" href="#s52">S52</a></td></tr>
+            <tr><td><strong>Agent state must stay in the cloud account</strong></td><td><span class="tag green">3</span></td><td>Run tools and memory yourself beside a platform-operated model, or use a runtime the platform hosts, such as OpenAI's on Bedrock <a class="src" href="#s38">S38</a>; Claude Managed Agents keeps state with Anthropic <a class="src" href="#s73">S73</a></td></tr>
+            <tr><td><strong>Resilience if one door goes dark</strong></td><td><span class="tag blue">1</span> <span class="tag green">3</span></td><td>Hold two tested paths to the same model; after the June 2026 suspension, doors reopened on different days <a class="src" href="#s53">S53</a> <a class="src" href="#s54">S54</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" id="chooser">
+      <div class="kicker">Interactive · door chooser</div>
+      <h3 class="sub-h">Answer five questions, get the doors that fit</h3>
+      <p>The logic applies the tables in this note to Claude, the model with the most door options. It names the binding constraint and flags conflicts rather than hiding them.</p>
+      <div class="calc-grid">
+        <div class="field"><label for="q-proc">Must the cloud provider be the sole processor?</label><select id="q-proc"><option value="no">No</option><option value="yes">Yes</option></select></div>
+        <div class="field"><label for="q-feat">Need the maker's agent features on day one?</label><select id="q-feat"><option value="no">No</option><option value="yes">Yes</option></select></div>
+        <div class="field"><label for="q-commit">Which cloud commitment should spend draw down?</label><select id="q-commit"><option value="none">None</option><option value="aws">AWS</option><option value="azure">Azure</option><option value="google">Google Cloud</option></select></div>
+        <div class="field"><label for="q-zdr">Covered models under a ZDR policy?</label><select id="q-zdr"><option value="no">No</option><option value="yes">Yes</option></select></div>
+        <div class="field"><label for="q-multi">One integration across several clouds?</label><select id="q-multi"><option value="no">No</option><option value="yes">Yes</option></select></div>
+      </div>
+      <div class="result-box" id="chooser-out" aria-live="polite"><h4>Result</h4><p>Choose answers above.</p></div>
+    </div>
+
+    <h3 class="sub-h">What breaks when a workload moves between doors</h3>
+    <p>Most enterprises will hold more than one door, so switching cost matters as much as the first choice. The model can be identical and the integration still breaks on the items below.</p>
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Item</th><th>How it differs</th><th>Sources</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Authentication</strong></td><td>API keys on the Claude API; IAM roles, SigV4 or short-lived bearer tokens on Bedrock; Azure API keys or Entra ID on Foundry</td><td><a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><strong>Endpoints and model identifiers</strong></td><td>Bedrock model IDs carry an anthropic. prefix and run on a separate endpoint from the legacy InvokeModel integration; Foundry calls use your deployment name rather than the model ID</td><td><a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td><strong>Features</strong></td><td>Server-side tools, batches, Files and Managed Agents differ by door; structured outputs are not supported on Bedrock's Messages endpoint</td><td><a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a></td></tr>
+            <tr><td><strong>Rate limits and observability</strong></td><td>Anthropic rate-limit headers are absent on Foundry; Foundry returns two request IDs that support teams need together; Bedrock logs to CloudWatch and CloudTrail</td><td><a class="src" href="#s36">S36</a> <a class="src" href="#s49">S49</a></td></tr>
+            <tr><td><strong>Retention and ZDR</strong></td><td>Retention location for covered models and ZDR eligibility per feature change with the door</td><td><a class="src" href="#s52">S52</a> <a class="src" href="#s48">S48</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>Three things reduce the cost. Anthropic's SDKs ship a client for each cloud door <a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a>. OpenAI-compatible APIs are the common surface for inference clouds and data platforms <a class="src" href="#s28">S28</a> <a class="src" href="#s27">S27</a>. And the two agent protocols now sit with a neutral steward: MCP (open source) moved to the Linux Foundation's Agentic AI Foundation in December 2025, co-founded by Anthropic, Block and OpenAI with AWS, Google and Microsoft as supporters <a class="src" href="#s66">S66</a>, and A2A (open source) joined the Linux Foundation in June 2025 <a class="src" href="#s67">S67</a>. Tools written to those protocols move between doors more easily than tools written to one platform's agent runtime.</p>
+
+  </div>
+</section>
+
+<section class="section" id="checklist" data-nav="Checklist">
+  <div class="wrap">
+    <div class="kicker">12 · Contract checklist</div>
+    <h2>Thirteen fields to put in writing, per model and path.</h2>
+    <p class="sub">Every vendor can say "we have Claude" or "we have GPT." These thirteen fields separate one path from another; each is documented to vary, and the last applies to every tool an agent calls.</p>
+
+    <div class="tablewrap">
+      <div class="table-scroll" data-tall="1">
+        <table>
+          <thead><tr><th>#</th><th>Field</th><th>What to get in writing</th><th>Why it varies</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Inference operator</strong></td><td>The party that runs the serving stack for this model on this path, and whose infrastructure it runs on</td><td>Claude on AWS has two different operators depending on the door <a class="src" href="#s1">S1</a>; Foundry's Azure-hosted option is Anthropic-operated on Azure hardware <a class="src" href="#s36">S36</a>; a gateway can switch operators between requests <a class="src" href="#s31">S31</a></td></tr>
+            <tr><td>2</td><td><strong>Processor and subprocessors</strong></td><td>The named data processor, the subprocessor list, and whether the model maker receives any data</td><td>On Bedrock, AWS processes the data and does not share it with Anthropic; on Claude Platform on AWS, Anthropic processes it <a class="src" href="#s2">S2</a>. Anthropic is an independent processor for Microsoft in Foundry <a class="src" href="#s36">S36</a> and a subprocessor in Microsoft 365 Copilot <a class="src" href="#s57">S57</a></td></tr>
+            <tr><td>3</td><td><strong>Processing region</strong></td><td>Where prompts and completions are processed, separately from where data is stored</td><td>Snowflake keeps stored data in the account region but transmits the inference payload transiently to the processing region under cross-region inference <a class="src" href="#s24">S24</a></td></tr>
+            <tr><td>4</td><td><strong>Endpoint type</strong></td><td>Regional or global/cross-region endpoint, and the specific API endpoint in use</td><td>Bedrock's regional endpoints cost 10% more than global ones <a class="src" href="#s49">S49</a>; OpenAI on Bedrock has two endpoints with different feature coverage <a class="src" href="#s15">S15</a></td></tr>
+            <tr><td>5</td><td><strong>Feature and API version</strong></td><td>Which API shape, which features are included now, and notice terms when features or model versions change</td><td>Maker features reach cloud-operated doors late or not at all <a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a>; Bedrock runs a Messages endpoint beside its legacy integration <a class="src" href="#s49">S49</a></td></tr>
+            <tr><td>6</td><td><strong>Commitment and SLA treatment</strong></td><td>Whether spend counts toward a commit, which SLA applies, and the support path</td><td>Claude Platform on AWS retires AWS commitments <a class="src" href="#s55">S55</a>; Claude in Foundry counts toward Azure consumption commitments for eligible customers <a class="src" href="#s10">S10</a> but not Agent Commit Units <a class="src" href="#s69">S69</a>; Microsoft compares SLAs and support paths separately for its two Claude hosting options <a class="src" href="#s8">S8</a></td></tr>
+            <tr><td>7</td><td><strong>Retention and review</strong></td><td>Retention period per model and feature, who may review retained data, and where it is stored</td><td>Covered models retain 30 days on every platform, held in different places by door <a class="src" href="#s52">S52</a>; ZDR eligibility differs by feature <a class="src" href="#s48">S48</a></td></tr>
+            <tr><td>8</td><td><strong>Training use</strong></td><td>A written no-training commitment covering prompts, outputs and files on this path</td><td>GitHub documents a different data commitment for each of the three hosts serving Claude in one product <a class="src" href="#s56">S56</a></td></tr>
+            <tr><td>9</td><td><strong>Safeguards, access tier and eligibility</strong></td><td>Which safety configuration and access tier of the model this path serves, and any eligibility rules</td><td>Fable and Mythos share a model with different safeguards <a class="src" href="#s52">S52</a>; Bedrock sets access per model, with Mythos Preview by invitation <a class="src" href="#s49">S49</a>; Anthropic's ownership-based restrictions apply on every door <a class="src" href="#s61">S61</a></td></tr>
+            <tr><td>10</td><td><strong>Output IP indemnity</strong></td><td>Who indemnifies whom against claims about outputs, for this model on this path</td><td>Under Microsoft's January 2026 Product Terms, customers indemnify Meta for Llama while Mistral indemnifies customers, per one licensing analysis <a class="src" href="#s68">S68</a>; Microsoft's Customer Copyright Commitment did not cover Anthropic services in Microsoft 365 Copilot as of September 2025 <a class="src" href="#s58">S58</a></td></tr>
+            <tr><td>11</td><td><strong>Lifecycle and deprecation</strong></td><td>Retirement dates and notice periods for this model on this path</td><td>Foundry follows the Claude API lifecycle <a class="src" href="#s36">S36</a>; Bedrock maintains a legacy integration beside its Messages endpoint <a class="src" href="#s49">S49</a></td></tr>
+            <tr><td>12</td><td><strong>Capacity and quotas</strong></td><td>Default and maximum throughput, the capacity pool, and launch-day priority</td><td>Claude Platform on AWS draws on a separate capacity pool <a class="src" href="#s3">S3</a>; Bedrock sets default and maximum token quotas <a class="src" href="#s49">S49</a>; Foundry omits Anthropic's rate-limit headers <a class="src" href="#s36">S36</a></td></tr>
+            <tr><td>13</td><td><strong>Tools invoked</strong></td><td>For every tool an agent can call: operator, region, retention and ZDR eligibility</td><td>Server-side tools are absent on Bedrock and basic-only on Foundry's Azure-hosted option <a class="src" href="#s49">S49</a> <a class="src" href="#s36">S36</a>; several are not ZDR eligible <a class="src" href="#s48">S48</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel invert">
+      <div class="kicker">The point</div>
+      <h3>The catalog is close to a commodity. The operator is not.</h3>
+      <p>Two paths to the same model can differ on all thirteen fields above, and in 2026 the path also decides who gets paid and where agent state lives. Treat each model path as its own procurement object, and make the thirteen fields part of the order form rather than the sales conversation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="judgments" data-nav="Judgments">
+  <div class="wrap">
+    <div class="kicker">13 · Falsifiers and judgments</div>
+    <h2>What would break this, and three calls.</h2>
+    <p class="sub">The thesis is testable. These are the conditions under which it fails, followed by judgments labeled as judgments, with dates to check them against.</p>
+
+    <div class="panel">
+      <h3 class="sub-h">What would falsify "the catalog is a commodity, the operator is not"</h3>
+      <p><strong>Day-one parity on a cloud-operated door.</strong> If Bedrock or Google Cloud carries a maker's full server-side tool set and agent runtime on launch day for a whole model generation, Door 2 loses its feature reason and the operator matters only for compliance.</p>
+      <p><strong>A lab pulls a frontier model from a cloud door, or a cloud drops a lab.</strong> That would show the door is a lever in a negotiation rather than a settled channel, and that equity ties do not guarantee distribution.</p>
+      <p><strong>Door 2 enters the platform's compliance programs.</strong> If AWS or Microsoft brings a maker-run service inside its own attestations, Doors 2 and 3 converge for regulated buyers and the distinction this note draws stops mattering to them.</p>
+      <p><strong>Channel economics converge.</strong> If a lab's public filings show cloud-channel margins in line with direct margins, the commercial asymmetry in section 04 was a phase, not a structure.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">Judgment</span>
+        <h4>Procurement disputes move to the operator line</h4>
+        <p>Most model-access contract fights in 2027 will turn on processor, retention location and tool operators rather than price. Those are already the fields vendors answer least precisely.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Judgment</span>
+        <h4>Agent state becomes the binding door decision</h4>
+        <p>The hardest choice to reverse will be where agent memory, files and runtime live, because models are swapped and state is not. Section 06 shows the two leading labs already choosing differently on the same cloud.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Judgment</span>
+        <h4>Clouds keep every door open</h4>
+        <p>A cloud paid inference margin on Door 3, a fee on Door 2, compute rent on Door 1 and an equity mark on the lab has little reason to close any of them. Expect more maker-run doors on clouds, not fewer.</p>
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Check by</th><th>What to look for</th><th>What it tests</th></tr></thead>
+          <tbody>
+            <tr><td><strong>31 Dec 2026</strong></td><td>A Fable-class model offered in Foundry's Azure-hosted option</td><td>Whether safeguard-heavy models stay maker-hosted</td></tr>
+            <tr><td><strong>30 Jun 2027</strong></td><td>Anthropic server-side tools, such as code execution or web search, on Bedrock's AWS-operated endpoint</td><td>The first falsifier above</td></tr>
+            <tr><td><strong>30 Jun 2027</strong></td><td>A lab's public filing that separates revenue by cloud door, not only by cloud</td><td>Whether "the split nobody publishes" survives a listing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>The judgments here are the author's, not findings, and will be scored in the next version.</p>
+  </div>
+</section>
+
+<section class="section" id="glossary" data-nav="Glossary">
+  <div class="wrap">
+    <div class="kicker">14 · Glossary</div>
+    <h2>The vocabulary, defined plainly.</h2>
+    <p class="sub">Terms as this note uses them. Filter by typing.</p>
+    <label class="field" for="gloss-q"><span class="kicker">Filter terms</span></label>
+    <input class="gloss-search" type="search" id="gloss-q" placeholder="Type a term, for example ZDR" aria-label="Filter glossary terms">
+    <div class="tablewrap">
+      <div class="table-scroll" data-tall="1">
+        <table>
+          <thead><tr><th>Term</th><th>Meaning here</th></tr></thead>
+          <tbody id="gloss-body">
+            <tr><td><strong>Door</strong></td><td>The delivery arrangement for one model on one path, defined by who operates inference relative to who made the model. Doors 1, 2 and 3 are set out in section 02.</td></tr>
+            <tr><td><strong>Operator</strong></td><td>The party that runs the serving stack for a model on a given path.</td></tr>
+            <tr><td><strong>Infrastructure host</strong></td><td>Whose hardware the operator runs on. It can differ from the operator, as with Claude in Foundry's Azure-hosted option.</td></tr>
+            <tr><td><strong>Processor, independent processor, subprocessor</strong></td><td>A party that processes data on a customer's behalf; one that does so under its own terms alongside a platform; and one engaged by another processor. Anthropic is an independent processor for Microsoft in Foundry and a subprocessor in Microsoft 365 Copilot.</td></tr>
+            <tr><td><strong>Claude Consumption Unit (CCU)</strong></td><td>The billing unit for Claude in a cloud marketplace, metered hourly and invoiced in arrears; not a prepaid credit.</td></tr>
+            <tr><td><strong>Commit drawdown</strong></td><td>Applying usage against spend already committed to a cloud, such as an AWS commitment or a Microsoft Azure Consumption Commitment (MACC).</td></tr>
+            <tr><td><strong>Agent Commit Unit (ACU)</strong></td><td>Microsoft's prepaid unit for eligible Foundry agent usage. Claude usage in Foundry does not draw it down.</td></tr>
+            <tr><td><strong>Global endpoint, cross-region inference</strong></td><td>Routing requests across regions for availability. A regional endpoint pins the region, and on Bedrock costs 10% more for Claude.</td></tr>
+            <tr><td><strong>Inference profile</strong></td><td>Bedrock's named routing group for a geography, such as US, EU, JP or AU.</td></tr>
+            <tr><td><strong>Data Zone deployment</strong></td><td>A Foundry deployment type that keeps inference inside the United States.</td></tr>
+            <tr><td><strong>Provisioned throughput</strong></td><td>Reserved model capacity billed whether or not it is used.</td></tr>
+            <tr><td><strong>Zero data retention (ZDR)</strong></td><td>An arrangement under which prompts and outputs are not stored after the response, subject to which features and models are eligible.</td></tr>
+            <tr><td><strong>Covered model</strong></td><td>Anthropic's designation for Mythos-class models, which carry 30-day retention on every platform.</td></tr>
+            <tr><td><strong>Business Associate Agreement (BAA)</strong></td><td>The HIPAA contract required before a provider handles protected health information.</td></tr>
+            <tr><td><strong>FedRAMP High, IL5</strong></td><td>US federal cloud authorization at the high-impact baseline, and a Department of Defense impact level for controlled unclassified information.</td></tr>
+            <tr><td><strong>Distribution fee</strong></td><td>The platform's cut of a lab's sales made through its channel. Anthropic records it as a sales, marketing and partnerships expense.</td></tr>
+            <tr><td><strong>Principal (gross revenue)</strong></td><td>The accounting position that lets a seller book the full sale price when it controls the service, even if another party collects the bill.</td></tr>
+            <tr><td><strong>Server-side tool</strong></td><td>A tool the platform executes, such as web search or code execution, as opposed to one your own code runs.</td></tr>
+            <tr><td><strong>MCP</strong></td><td>Model Context Protocol (open source), a standard for connecting models to tools and data, governed since December 2025 by the Linux Foundation's Agentic AI Foundation.</td></tr>
+            <tr><td><strong>A2A</strong></td><td>Agent2Agent protocol (open source) for communication between agents, hosted by the Linux Foundation since June 2025.</td></tr>
+            <tr><td><strong>Open weights, open source</strong></td><td>Downloadable model parameters under a license that may restrict use, versus software under an OSI-approved license. Llama is open-weight; MCP is open source.</td></tr>
+            <tr><td><strong>Window</strong></td><td>This note's term for the period a capability is available on one door before it reaches another.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sources" data-nav="Sources">
+  <div class="wrap">
+    <div class="kicker">15 · Method, corrections and sources</div>
+    <h2>What was checked, and where it came from.</h2>
+    <p class="sub">Compiled 23 September 2026 and revised 12 October 2026 from vendor documentation, company filings, vendor announcements and trade press. First-party documentation was re-read on 12 October 2026. Undated pages carry the access date, and every source carries a tier.</p>
+
+    <div class="fam">
+      <h4 class="fam-h"><button class="fam-head" type="button" aria-expanded="false" aria-controls="fam-corr2"><span class="fam-title">Corrections in v2.0</span></button></h4>
+      <div id="fam-corr2" class="fam-body">
+        <div>
+          <div class="inner">
+            <p><strong>Foundry hosting.</strong> v1.1 placed Claude in Foundry's Azure-hosted option in Door 3. Anthropic's documentation describes both Foundry options as Anthropic-operated, the Azure-hosted one on Azure infrastructure with prompts kept in Azure <a class="src" href="#s36">S36</a>. It now sits in Door 2, and on Azure Claude has no platform-operated path.</p>
+            <p><strong>Why GPT reached Bedrock.</strong> v1.1 treated the $38B AWS compute commitment as the precondition. The distribution right followed Amazon's February 2026 investment and Frontier distribution agreement and Microsoft's April license amendment <a class="src" href="#s38">S38</a> <a class="src" href="#s37">S37</a>.</p>
+            <p><strong>Feature-gap evidence.</strong> v1.1 rested the gap on one May 2026 third-party comparison <a class="src" href="#s7">S7</a>. v2.0 cites Anthropic's feature matrix and platform pages as of 12 October 2026, which show the gap persisting <a class="src" href="#s48">S48</a> <a class="src" href="#s49">S49</a> <a class="src" href="#s73">S73</a>.</p>
+            <p><strong>Door 3 isolation.</strong> Now cited to Anthropic's documentation <a class="src" href="#s49">S49</a> rather than a third-party summary of it <a class="src" href="#s5">S5</a>.</p>
+            <p><strong>Timeline.</strong> The 29 June 2026 row no longer says Claude is under Door 3 on all three hyperscalers, and the November 2025 row no longer calls the $38B deal the precondition for Bedrock.</p>
+            <p><strong>Source tiers.</strong> Every source now carries an A, B or C tier.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fam">
+      <h4 class="fam-h"><button class="fam-head" type="button" aria-expanded="false" aria-controls="fam-corr"><span class="fam-title">Corrections to the original source notes (v1.1)</span></button></h4>
+      <div id="fam-corr" class="fam-body">
+        <div>
+          <div class="inner">
+            <p><strong>Vertex AI.</strong> Renamed the Gemini Enterprise Agent Platform at Google Cloud Next in April 2026. Model Garden and the existing endpoint carry forward <a class="src" href="#s21">S21</a>.</p>
+            <p><strong>OpenAI availability.</strong> The notes place the OpenAI suite with Microsoft. Since 28 April 2026 OpenAI frontier models also run on Bedrock, GA from 1 June, with GPT-6 Astra GA on 8 September <a class="src" href="#s16">S16</a> <a class="src" href="#s12">S12</a> <a class="src" href="#s14">S14</a>.</p>
+            <p><strong>Foundry perimeter.</strong> "Prompts stay within your Azure security perimeter" holds for Azure-hosted Claude deployments, not the Anthropic-hosted option <a class="src" href="#s8">S8</a>.</p>
+            <p><strong>MAI models.</strong> Microsoft's first-party MAI models in Foundry were in private preview after Build 2026 <a class="src" href="#s11">S11</a>.</p>
+            <p><strong>Groq.</strong> The LPU technology is non-exclusively licensed to Nvidia and the founder moved to Nvidia; GroqCloud continues as an independent inference cloud <a class="src" href="#s32">S32</a> <a class="src" href="#s33">S33</a>.</p>
+            <p><strong>SiliconFlow.</strong> Removed. The only material found was the company's own marketing content, which is not sufficient for a procurement-oriented note.</p>
+            <p><strong>Missing category.</strong> The notes omit Door 2 (maker-run, platform-billed), the arrangement most likely to be misclassified in procurement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fieldnote">
+      <div class="kicker">Where the sources disagree</div>
+      <p><strong>Who runs Claude in Foundry.</strong> Microsoft's GA announcement emphasizes Azure hosting <a class="src" href="#s9">S9</a>; Anthropic's documentation names Anthropic as operator in both options <a class="src" href="#s36">S36</a>. The two agree once operator and infrastructure are separated. The labels do not.</p>
+      <p><strong>OpenAI's revenue share to Microsoft.</strong> Microsoft says the percentage is unchanged and capped without stating it <a class="src" href="#s37">S37</a>; trade coverage puts it at 20% <a class="src" href="#s47">S47</a>.</p>
+      <p><strong>Fable 5 on the clouds after 1 July.</strong> The restoration account says the clouds would follow <a class="src" href="#s53">S53</a>; a hands-on test found Bedrock live the same day <a class="src" href="#s54">S54</a>. No first-party per-cloud restoration dates were found.</p>
+      <p><strong>The cloud's take on Claude sales.</strong> Reuters' 16 cents per dollar is a blended calculation from the filing <a class="src" href="#s44">S44</a>; the report that AWS takes about half of Anthropic's gross profit on AWS sales is single-sourced <a class="src" href="#s46">S46</a>. They measure different things and should not be compared directly.</p>
+    </div>
+
+    <h3 class="sub-h">Sources</h3>
+    <ol class="srclist">
+      <li id="s1"><span class="tier">A</span>AWS documentation, <a href="https://docs.aws.amazon.com/claude-platform/latest/userguide/cpa-vs-bedrock.html" target="_blank" rel="noopener">Claude Platform on AWS vs Amazon Bedrock</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s2"><span class="tier">A</span>AWS, <a href="https://aws.amazon.com/claude-platform/" target="_blank" rel="noopener">Claude Platform on AWS</a> product page. 20 Aug 2026.</li>
+      <li id="s3"><span class="tier">A</span>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws" target="_blank" rel="noopener">Claude Platform on AWS</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s4"><span class="tier">C</span>Caylent (third party), <a href="https://caylent.com/blog/claude-platform-on-aws-an-architecture-decision-guide-for-aws-teams" target="_blank" rel="noopener">Claude Platform on AWS: An Architecture Decision Guide for AWS Teams</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s5"><span class="tier">C</span>Caleidos (third party), <a href="https://www.caleidos.pe/en/blog/claude-platform-on-aws-vs-amazon-bedrock" target="_blank" rel="noopener">Claude Platform on AWS vs Amazon Bedrock</a>. 7 Jul 2026.</li>
+      <li id="s6"><span class="tier">C</span>CloudZero (third party), <a href="https://www.cloudzero.com/blog/claude-on-aws-bedrock/" target="_blank" rel="noopener">Claude on AWS: Bedrock vs. Claude Platform Costs Compared</a>. 12 May 2026.</li>
+      <li id="s7"><span class="tier">C</span>iSimplifyMe (third party), <a href="https://isimplifyme.com/blog/claude-platform-on-aws-vs-bedrock" target="_blank" rel="noopener">Claude Platform on AWS vs Bedrock vs Direct API</a>. 11 May 2026. Superseded as primary support in v2.0 by S48.</li>
+      <li id="s8"><span class="tier">A</span>Microsoft Learn, <a href="https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/claude-models" target="_blank" rel="noopener">Claude models in Microsoft Foundry</a>. Updated Sep 2026; accessed 23 Sep 2026.</li>
+      <li id="s9"><span class="tier">A</span>Microsoft Azure Blog, <a href="https://azure.microsoft.com/en-us/blog/claude-in-microsoft-foundry-is-now-generally-available/" target="_blank" rel="noopener">Claude in Microsoft Foundry is now generally available</a>. 29 Jun 2026.</li>
+      <li id="s10"><span class="tier">B</span>Redmond Magazine, <a href="https://redmondmag.com/articles/2026/07/02/anthropic-claude-goes-ga-in-microsoft-foundry.aspx" target="_blank" rel="noopener">Anthropic Claude Goes GA in Microsoft Foundry</a>. 2 Jul 2026.</li>
+      <li id="s11"><span class="tier">C</span>WinBuzzer, <a href="https://winbuzzer.com/2026/06/02/microsoft-adds-seven-mai-models-to-foundry-for-developers-xcxwbn/" target="_blank" rel="noopener">Microsoft Expands Foundry With Seven In-House MAI Models</a>. 2 Jun 2026.</li>
+      <li id="s12"><span class="tier">A</span>AWS What's New, <a href="https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-openai-models-codex-generally-available/" target="_blank" rel="noopener">GPT-5.5, GPT-5.4, and Codex from OpenAI are now generally available on Amazon Bedrock</a>. 1 Jun 2026.</li>
+      <li id="s13"><span class="tier">A</span>About Amazon, <a href="https://www.aboutamazon.com/news/aws/bedrock-openai-models" target="_blank" rel="noopener">OpenAI models on Amazon Bedrock</a> (running update log, including 9 Jul 2026 GPT-5.6 GA). Last updated 11 Aug 2026.</li>
+      <li id="s14"><span class="tier">A</span>AWS What's New, <a href="https://aws.amazon.com/about-aws/whats-new/2026/09/openai-gpt-6-astra-on-amazon-bedrock/" target="_blank" rel="noopener">OpenAI GPT-6 Astra is now generally available on Amazon Bedrock</a>. 8 Sep 2026.</li>
+      <li id="s15"><span class="tier">A</span>OpenAI developer documentation, <a href="https://developers.openai.com/api/docs/guides/amazon-bedrock" target="_blank" rel="noopener">OpenAI models in Amazon Bedrock</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s16"><span class="tier">C</span>Tech Insider, <a href="https://tech-insider.org/openai-amazon-bedrock-38-billion-azure-exclusivity-end-2026/" target="_blank" rel="noopener">OpenAI on AWS Bedrock: $38B Deal Ends Azure Lock-In</a>. 21 Aug 2026.</li>
+      <li id="s17"><span class="tier">A</span>OpenAI, <a href="https://openai.com/index/introducing-openai-frontier/" target="_blank" rel="noopener">Introducing OpenAI Frontier</a>. 5 Feb 2026.</li>
+      <li id="s18"><span class="tier">B</span>CNBC, <a href="https://www.cnbc.com/2026/02/05/open-ai-frontier-enterprise-customers.html" target="_blank" rel="noopener">OpenAI launches new enterprise platform in bid to win more business customers</a>. 5 Feb 2026.</li>
+      <li id="s19"><span class="tier">A</span>Google Cloud, <a href="https://cloud.google.com/products/gemini-enterprise-agent-platform" target="_blank" rel="noopener">Gemini Enterprise Agent Platform (formerly Vertex AI)</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s20"><span class="tier">B</span>The Next Web, <a href="https://thenextweb.com/news/google-cloud-next-ai-agents-agentic-era" target="_blank" rel="noopener">Google Cloud Next 2026: AI agents, A2A protocol, Workspace Studio</a>. 22 Apr 2026.</li>
+      <li id="s21"><span class="tier">C</span>ACTGSYS, <a href="https://actgsys.com/en/blog/vertex-ai-gemini-enterprise-agent-platform-sme-2026-05" target="_blank" rel="noopener">Google Killed the Vertex AI Name: It's Now the Gemini Enterprise Agent Platform</a>. 27 May 2026.</li>
+      <li id="s22"><span class="tier">A</span>AWS documentation, <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html" target="_blank" rel="noopener">Models at a glance, Amazon Bedrock</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s23"><span class="tier">A</span>AWS, <a href="https://aws.amazon.com/bedrock/pricing/" target="_blank" rel="noopener">Amazon Bedrock pricing</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s24"><span class="tier">A</span>Snowflake documentation, <a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cross-region-inference" target="_blank" rel="noopener">Cross-region inference</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s25"><span class="tier">A</span>Snowflake documentation, <a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql-regional-availability" target="_blank" rel="noopener">Models and regional availability for Cortex AI Functions</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s26"><span class="tier">A</span>Snowflake Engineering Blog, <a href="https://www.snowflake.com/en/blog/engineering/cross-region-ai-inference-data-sovereignty/" target="_blank" rel="noopener">Cross-region AI inference and data sovereignty</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s27"><span class="tier">A</span>Microsoft Learn (Azure Databricks), <a href="https://learn.microsoft.com/en-us/azure/databricks/machine-learning/model-serving/score-foundation-models" target="_blank" rel="noopener">Use foundation models</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s28"><span class="tier">A</span>Together AI documentation, <a href="https://docs.together.ai/docs/introduction" target="_blank" rel="noopener">Introduction</a> and product index. Undated; accessed 23 Sep 2026.</li>
+      <li id="s29"><span class="tier">A</span>Hugging Face documentation, <a href="https://huggingface.co/docs/inference-endpoints/about" target="_blank" rel="noopener">About Inference Endpoints</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s30"><span class="tier">A</span>Hugging Face documentation, <a href="https://huggingface.co/docs/inference-endpoints/guides/configuration" target="_blank" rel="noopener">Inference Endpoints configuration</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s31"><span class="tier">A</span>OpenRouter documentation, <a href="https://openrouter.ai/docs/features/provider-routing" target="_blank" rel="noopener">Provider Routing</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s32"><span class="tier">B</span>GovCon Wire, <a href="https://www.govconwire.com/articles/groq-nvidia-ai-inference-tech-licensing-deal" target="_blank" rel="noopener">Groq Licenses AI Inference Tech to NVIDIA in Non-Exclusive Deal</a>. Dec 2025.</li>
+      <li id="s33"><span class="tier">C</span>Implicator, <a href="https://www.implicator.ai/groq-350-million-3-5-billion-valuation-after-nvidia-deal/" target="_blank" rel="noopener">Groq raises $350 million at $3.5 billion valuation after Nvidia deal</a>. Aug 2026.</li>
+      <li id="s34"><span class="tier">C</span>Let's Data Science (summarizing Business Insider), <a href="https://letsdatascience.com/news/groq-navigates-ai-cloud-market-shift-after-nvidia-deal-ee956198" target="_blank" rel="noopener">Groq Navigates AI Cloud Market Shift After Nvidia Deal</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s35"><span class="tier">A</span>Mistral AI, <a href="https://mistral.ai/en/models" target="_blank" rel="noopener">Models</a>. Undated; accessed 23 Sep 2026.</li>
+      <li id="s36"><span class="tier">A</span>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry" target="_blank" rel="noopener">Claude in Microsoft Foundry</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s37"><span class="tier">A</span>Microsoft Official Blog, <a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/" target="_blank" rel="noopener">The next phase of the Microsoft-OpenAI partnership</a>. 27 Apr 2026.</li>
+      <li id="s38"><span class="tier">A</span>OpenAI, <a href="https://openai.com/index/amazon-partnership/" target="_blank" rel="noopener">OpenAI and Amazon announce strategic partnership</a>. 27 Feb 2026.</li>
+      <li id="s39"><span class="tier">A</span>Anthropic, <a href="https://www.anthropic.com/news/microsoft-nvidia-anthropic-announce-strategic-partnerships" target="_blank" rel="noopener">Microsoft, NVIDIA, and Anthropic announce strategic partnerships</a>. 18 Nov 2025.</li>
+      <li id="s40"><span class="tier">B</span>GeekWire, <a href="https://www.geekwire.com/2026/04/amazon-doubles-down-on-anthropic-with-25b-investment-mirroring-its-openai-cloud-deal/" target="_blank" rel="noopener">Amazon doubles down on Anthropic with $25B investment, mirroring its OpenAI cloud deal</a>. 20 Apr 2026.</li>
+      <li id="s41"><span class="tier">B</span>The Jakarta Post (wire report), <a href="https://www.thejakartapost.com/business/2026/04/25/google-to-invest-up-to-40-billion-in-ai-rival-anthropic.html" target="_blank" rel="noopener">Google to invest up to $40 billion in AI rival Anthropic</a>. 25 Apr 2026.</li>
+      <li id="s42"><span class="tier">A</span>Amazon.com, Form 10-Q, quarter ended 30 June 2026 (SEC), <a href="https://www.sec.gov/Archives/edgar/data/0001018724/000101872426000026/amzn-20260630.htm" target="_blank" rel="noopener">Investments note, Anthropic</a>. Accessed 12 Oct 2026.</li>
+      <li id="s43"><span class="tier">B</span>Fortune via Yahoo Finance, <a href="https://finance.yahoo.com/sectors/technology/articles/google-amazon-biggest-profit-driver-170449859.html" target="_blank" rel="noopener">Google and Amazon's biggest profit driver last quarter was their Anthropic stakes</a>. 2026; accessed 12 Oct 2026.</li>
+      <li id="s44"><span class="tier">B</span>Reuters via The Star, <a href="https://www.thestar.com.my/tech/tech-news/2026/09/30/exclusive-anthropic-ipo-prospectus-lays-bare-deep-dependence-on-big-tech-partners" target="_blank" rel="noopener">Exclusive: Anthropic IPO prospectus lays bare deep dependence on Big Tech partners</a>. 30 Sep 2026.</li>
+      <li id="s45"><span class="tier">C</span>Silicon UK (summarizing Reuters), <a href="https://www.silicon.co.uk/e-enterprise/fund-raising/anthropic-ai-prospectus-631740" target="_blank" rel="noopener">Anthropic AI prospectus</a>. Accessed 12 Oct 2026.</li>
+      <li id="s46"><span class="tier">C</span>DatacenterDynamics (summarizing The Information), <a href="https://www.datacenterdynamics.com/en/news/anthropic-cloud-spend-expected-to-reach-80bn-through-2029/" target="_blank" rel="noopener">Anthropic cloud spend expected to reach $80bn through 2029</a>. Feb 2026.</li>
+      <li id="s47"><span class="tier">C</span>SmarterX, <a href="https://smarterx.ai/smarterxblog/openai-microsoft-partnership" target="_blank" rel="noopener">OpenAI's Microsoft License Goes Non-Exclusive</a>. 28 Apr 2026.</li>
+      <li id="s48"><span class="tier">A</span>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/overview" target="_blank" rel="noopener">Features overview</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s49"><span class="tier">A</span>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/claude-in-amazon-bedrock" target="_blank" rel="noopener">Claude in Amazon Bedrock (Opus 4.7 and later)</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s50"><span class="tier">A</span>Anthropic Engineering, <a href="https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues" target="_blank" rel="noopener">A postmortem of three recent issues</a>. Sep 2025.</li>
+      <li id="s51"><span class="tier">A</span>Anthropic, <a href="https://www.anthropic.com/news/fable-mythos-access" target="_blank" rel="noopener">Statement on the US government directive to suspend access to Fable 5 and Mythos 5</a>. 12 Jun 2026.</li>
+      <li id="s52"><span class="tier">A</span>Claude Help Center, <a href="https://support.claude.com/en/articles/15425996-data-retention-practices-for-covered-models" target="_blank" rel="noopener">Data retention practices for Covered Models</a>. 5 Sep 2026.</li>
+      <li id="s53"><span class="tier">C</span>YourStory, <a href="https://yourstory.com/ai-story/anthropic-restores-fable-5-mythos-5-after-us-eases-ban" target="_blank" rel="noopener">Anthropic restores Fable 5, Mythos 5 after US eases ban</a>. Jul 2026.</li>
+      <li id="s54"><span class="tier">C</span>Classmethod DevelopersIO (hands-on test), <a href="https://dev.classmethod.jp/en/articles/bedrock-claude-fable-5-resumed/" target="_blank" rel="noopener">I tested the re-released Claude Fable 5 on Amazon Bedrock</a>. 1 Jul 2026.</li>
+      <li id="s55"><span class="tier">A</span>Anthropic (claude.com), <a href="https://claude.com/resources/articles/claude-platform-on-aws" target="_blank" rel="noopener">Introducing the Claude Platform on AWS</a>. May 2026; accessed 12 Oct 2026.</li>
+      <li id="s56"><span class="tier">A</span>GitHub Docs, <a href="https://docs.github.com/en/copilot/reference/ai-models/model-hosting" target="_blank" rel="noopener">Hosting of models for GitHub Copilot</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s57"><span class="tier">B</span>Directions on Microsoft, <a href="https://www.directionsonmicrosoft.com/reports/m365-copilot-adds-choice-and-risk-with-anthropics-claude" target="_blank" rel="noopener">M365 Copilot Adds Choice (and Risk) with Anthropic's Claude</a>. 20 Jan 2026, updated 12 Jun 2026.</li>
+      <li id="s58"><span class="tier">B</span>Directions on Microsoft, <a href="https://www.directionsonmicrosoft.com/microsoft-begins-rolling-out-more-model-and-agent-options-for-m365-copilot-and-beyond/" target="_blank" rel="noopener">Microsoft begins rolling out more model and agent options for M365 Copilot and beyond</a>. 26 Sep 2025.</li>
+      <li id="s59"><span class="tier">A</span>Anthropic, <a href="https://www.anthropic.com/news/salesforce-anthropic-expanded-partnership" target="_blank" rel="noopener">Anthropic and Salesforce expand partnership to bring Claude to regulated industries</a>. 14 Oct 2025.</li>
+      <li id="s60"><span class="tier">A</span>Oracle, <a href="https://docs.oracle.com/iaas/releasenotes/services/generative-ai/index.htm" target="_blank" rel="noopener">OCI Generative AI release notes</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s61"><span class="tier">A</span>Anthropic, <a href="https://www.anthropic.com/news/updating-restrictions-of-sales-to-unsupported-regions" target="_blank" rel="noopener">Updating restrictions of sales to unsupported regions</a>. 4 Sep 2025.</li>
+      <li id="s62"><span class="tier">B</span>Malay Mail (AFP), <a href="https://www.malaymail.com/news/tech-gadgets/2025/09/05/amazon-backed-anthropic-says-no-to-china-russia-iran-north-korea-on-claude-chatbot/190109" target="_blank" rel="noopener">Amazon-backed Anthropic says no to China, Russia, Iran, North Korea</a>. 5 Sep 2025.</li>
+      <li id="s63"><span class="tier">A</span>Elastic (Shay Banon), <a href="https://www.elastic.co/blog/elasticsearch-is-open-source-again" target="_blank" rel="noopener">Elasticsearch is open source, again</a>. Aug 2024.</li>
+      <li id="s64"><span class="tier">C</span>Simon Willison (commentary), <a href="https://www.simonwillison.net/2024/Aug/29/elasticsearch-is-open-source-again" target="_blank" rel="noopener">Elasticsearch is open source, again</a>. 29 Aug 2024.</li>
+      <li id="s65"><span class="tier">A</span>Meta, <a href="https://github.com/facebookresearch/llama/blob/main/LICENSE" target="_blank" rel="noopener">Llama 2 Community License Agreement</a>. Jul 2023.</li>
+      <li id="s66"><span class="tier">A</span>Anthropic, <a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation" target="_blank" rel="noopener">Donating the Model Context Protocol and establishing the Agentic AI Foundation</a>. 9 Dec 2025.</li>
+      <li id="s67"><span class="tier">B</span>SD Times, <a href="https://sdtimes.com/ai/googles-agent2agent-protocol-finds-new-home-at-the-linux-foundation/" target="_blank" rel="noopener">Google's Agent2Agent protocol finds new home at the Linux Foundation</a>. Jun 2025.</li>
+      <li id="s68"><span class="tier">C</span>SAMexpert (licensing analysis), <a href="https://samexpert.com/microsoft-product-terms-january-2026/" target="_blank" rel="noopener">Microsoft Product Terms January 2026</a>. Jan 2026.</li>
+      <li id="s69"><span class="tier">C</span>Microsoft Q&A (community answer), <a href="https://learn.microsoft.com/en-us/answers/a/12778800" target="_blank" rel="noopener">Claude usage in Microsoft Foundry and Agent Commit Units</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s70"><span class="tier">C</span>TechWyse, <a href="https://www.techwyse.com/news/ai-search/openai-models-codex-managed-agents-amazon-bedrock-aws" target="_blank" rel="noopener">OpenAI models, Codex, and managed agents now available on Amazon Bedrock</a>. 29 Apr 2026.</li>
+      <li id="s71"><span class="tier">A</span>Amazon.com, Form 10-Q, quarter ended 31 March 2026 (SEC), <a href="https://www.sec.gov/Archives/edgar/data/0001018724/000101872426000014/amzn-20260331.htm" target="_blank" rel="noopener">Investments note, Anthropic</a>. Accessed 12 Oct 2026.</li>
+      <li id="s72"><span class="tier">C</span>Nasdaq (Zacks), <a href="https://www.nasdaq.com/articles/amazon-taps-openai-boost-ai-footprint-more-upside-ahead" target="_blank" rel="noopener">Amazon taps OpenAI to boost AI footprint</a>. Mar 2026; accessed 12 Oct 2026.</li>
+      <li id="s73"><span class="tier">A</span>Anthropic documentation, <a href="https://platform.claude.com/docs/en/api/overview" target="_blank" rel="noopener">API overview</a>. Undated; accessed 12 Oct 2026.</li>
+      <li id="s74"><span class="tier">B</span>Directions on Microsoft, <a href="https://www.directionsonmicrosoft.com/microsoft-openai-amend-their-agreement-again/" target="_blank" rel="noopener">Microsoft, OpenAI amend their agreement again</a>. 27 Apr 2026.</li>
+      <li id="s75"><span class="tier">A</span>IBM Newsroom, <a href="https://newsroom.ibm.com/2025-10-07-2025-ibm-and-anthropic-partner-to-advance-enterprise-software-development-with-proven-security-and-governance" target="_blank" rel="noopener">IBM and Anthropic partner to advance enterprise software development</a>. 7 Oct 2025.</li>
+      <li id="s76"><span class="tier">B</span>TechTarget, <a href="https://www.techtarget.com/ai/news/366626223/Oracle-adds-xAI-Grok-models-to-OCI" target="_blank" rel="noopener">Oracle adds xAI Grok models to OCI</a>. 2025.</li>
+    </ol>
+
+    <div class="fieldnote">
+      <div class="kicker">Shelf life</div>
+      <p>Model names, hosting options, feature coverage and deal terms in this space change monthly. Re-check the feature matrix <a class="src" href="#s48">S48</a>, Foundry hosting options <a class="src" href="#s36">S36</a> and Bedrock model access <a class="src" href="#s49">S49</a> before using this note in a customer or investor setting. Channel figures come from a confidential filing as reported by Reuters and will be superseded by a public prospectus if one is filed.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="verstamp">Frontier Labs vs Cloud Model Platforms — v2.0 · build 2026-10-12T16:10-04:00 · 12 October 2026, 4:10 PM ET · supersedes v1.1 (build 2026-09-23T08:54-04:00). Changes in v2.0: Foundry's Azure-hosted Claude reclassified from Door 3 to Door 2 per Anthropic's documentation; exclusivity timeline rebuilt around the October 2025 recapitalization, Amazon's February 2026 OpenAI investment and the April 2026 Microsoft amendment; feature-gap claim re-sourced to Anthropic's feature matrix with a per-path table; new sections on reading vendor claims, ownership and channel economics with a workload cost calculator, what varies for one model by door, tools and agent state, lineage, falsifiers and judgments, and a filterable glossary; door chooser and switching-cost table added to the decision guide; contract checklist expanded from six to thirteen fields; landscape extended to Oracle, IBM, applications and regional platforms; source tiers added and 40 sources added (S37 to S76).</p>
+  </div>
+</footer>
+
+<script>
+/* theme */
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle'),
+      lbl=document.getElementById('themeLabel'), meta=document.getElementById('themeColorMeta');
+  function read(){ try{return localStorage.getItem('theme');}catch(e){return null;} }
+  function write(v){ try{localStorage.setItem('theme',v);}catch(e){} }
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    if(lbl) lbl.textContent = (t==='dark'?'Light':'Dark');
+    if(btn) btn.setAttribute('aria-pressed', t==='dark' ? 'true':'false');
+    if(meta) meta.setAttribute('content', t==='dark' ? '#0d0d10' : '#f5f5f7');
+  }
+  var mq=null; try{ mq=window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null; }catch(e){}
+  var saved=read();
+  apply(saved || (mq && mq.matches ? 'dark':'light'));
+  if(btn) btn.addEventListener('click',function(){
+    var next = root.getAttribute('data-theme')==='dark' ? 'light':'dark';
+    apply(next); write(next);
+  });
+  try{ if(mq && mq.addEventListener) mq.addEventListener('change',function(e){ if(!read()) apply(e.matches?'dark':'light'); }); }catch(e){}
+})();
+
+/* nav builds itself from sections; mobile menu with aria-expanded + Escape */
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('section.section[data-nav]'));
+  var nl=document.getElementById('navlinks'), dr=document.getElementById('drawer'), mb=document.getElementById('menubtn');
+  secs.forEach(function(s){
+    [nl,dr].forEach(function(h){
+      if(!h)return;
+      var a=document.createElement('a');
+      a.href='#'+s.id; a.textContent=s.dataset.nav;
+      h.appendChild(a);
+    });
+  });
+  function setMenu(open){
+    if(!dr||!mb)return;
+    dr.classList.toggle('open',open);
+    mb.setAttribute('aria-expanded',open?'true':'false');
+  }
+  if(mb&&dr) mb.addEventListener('click',function(){ setMenu(!dr.classList.contains('open')); });
+  if(dr) dr.addEventListener('click',function(e){ if(e.target.tagName==='A') setMenu(false); });
+  document.addEventListener('keydown',function(e){
+    if((e.key==='Escape'||e.key==='Esc') && dr && dr.classList.contains('open')){ setMenu(false); if(mb) mb.focus(); }
+  });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      [].forEach.call(document.querySelectorAll('#navlinks a'),function(a){
+        var on=a.getAttribute('href')==='#'+e.target.id;
+        a.classList.toggle('active', on);
+        if(on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current');
+      });
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(function(s){io.observe(s);});
+})();
+
+/* accordions: real buttons with aria-expanded */
+[].forEach.call(document.querySelectorAll('.fam-head'),function(h){
+  h.addEventListener('click',function(){
+    var f=h.closest('.fam'); if(!f)return;
+    var open=f.classList.toggle('open');
+    h.setAttribute('aria-expanded',open?'true':'false');
+  });
+});
+
+/* landscape filter: chips with aria-pressed */
+(function(){
+  var chips=document.querySelectorAll('#filters .chip');
+  if(!chips.length)return;
+  [].forEach.call(chips,function(c){
+    c.addEventListener('click',function(){
+      [].forEach.call(chips,function(x){ x.classList.remove('active'); x.setAttribute('aria-pressed','false'); });
+      c.classList.add('active'); c.setAttribute('aria-pressed','true');
+      var f=c.dataset.filter;
+      [].forEach.call(document.querySelectorAll('[data-cat]'),function(el){
+        el.style.display=(f==='all'||el.dataset.cat===f)?'':'none';
+      });
+      markScroll();
+    });
+  });
+})();
+
+/* horizontal-scroll cue for wide tables */
+function markScroll(){
+  [].forEach.call(document.querySelectorAll('.tablewrap'),function(w){
+    var s=w.querySelector('.table-scroll'); if(!s)return;
+    if(!w.querySelector('.scroll-hint')){
+      var h=document.createElement('div'); h.className='scroll-hint'; h.setAttribute('aria-hidden','true');
+      h.textContent='Scroll sideways for more columns \u2192'; w.appendChild(h);
+    }
+    var over = s.scrollWidth > s.clientWidth + 2;
+    w.classList.toggle('is-scrollable', over);
+    if(over){ s.setAttribute('tabindex','0'); s.setAttribute('role','region'); s.setAttribute('aria-label','Scrollable table'); }
+    else { s.removeAttribute('tabindex'); s.removeAttribute('role'); s.removeAttribute('aria-label'); }
+  });
+}
+try{ markScroll(); window.addEventListener('resize',markScroll); }catch(e){}
+
+/* v2.0: workload cost calculator */
+(function(){
+  var root=document.getElementById('calc'); if(!root) return;
+  function v(id){ var el=document.getElementById(id); if(!el) return 0; var n=parseFloat(el.value); return isFinite(n)?n:0; }
+  function clamp(n,a,b){ return Math.min(Math.max(n,a),b); }
+  function on(id){ var el=document.getElementById(id); return !!(el&&el.checked); }
+  function set(id,t){ var el=document.getElementById(id); if(el) el.textContent=t; }
+  function money(n){ try{ return '$'+Math.round(n).toLocaleString('en-US'); }catch(e){ return '$'+Math.round(n); } }
+  function run(){
+    var pin=Math.max(v('c-pin'),0), pout=Math.max(v('c-pout'),0);
+    var tin=Math.max(v('c-tin'),0), tout=Math.max(v('c-tout'),0);
+    var cache=clamp(v('c-cache'),0,100)/100, mult=Math.max(v('c-mult'),0);
+    var bshare=clamp(v('c-bshare'),0,100)/100, bdisc=clamp(v('c-bdisc'),0,100)/100;
+    var base=tin*pin*((1-cache)+cache*mult)+tout*pout;
+    var res=[1,2,3].map(function(d){
+      var b=on('c-b'+d)?bshare*bdisc:0;
+      var prem=v('c-p'+d)/100, disc=clamp(v('c-d'+d),0,100)/100, fee=clamp(v('c-f'+d),0,100)/100;
+      var cost=base*(1-b)*(1+prem)*(1-disc);
+      return {cost:cost, net:cost*(1-fee)};
+    });
+    res.forEach(function(r,i){
+      var d=i+1;
+      set('c-o'+d, money(r.cost));
+      if(i===0){ set('c-x1','baseline'); }
+      else {
+        var delta=res[0].cost>0?(r.cost/res[0].cost-1)*100:0;
+        set('c-x'+d,(delta>=0?'+':'')+delta.toFixed(1)+'%');
+      }
+      set('c-n'+d, money(r.net));
+    });
+  }
+  [].forEach.call(root.querySelectorAll('input'),function(i){
+    i.addEventListener('input',run); i.addEventListener('change',run);
+  });
+  run();
+})();
+
+/* v2.0: door chooser */
+(function(){
+  var out=document.getElementById('chooser-out'); if(!out) return;
+  function val(id){ var el=document.getElementById(id); return el?el.value:''; }
+  function s(n){ return ' <a class="src" href="#s'+n+'">S'+n+'</a>'; }
+  function line(tag,label,text){ return '<p><span class="tag '+tag+'">'+label+'</span> '+text+'</p>'; }
+  function run(){
+    var proc=val('q-proc'), feat=val('q-feat'), commit=val('q-commit'), zdr=val('q-zdr'), multi=val('q-multi');
+    var h='<h4>Result</h4>';
+    if(proc==='yes' && feat==='yes'){
+      h+=line('orange','Conflict','No single path gives both today. The cloud-operated doors do not carry the maker\'s server-side tools, and the doors that do are maker-operated.'+s(49)+s(48)+' Split the workload: regulated data on Door 3, agentic work that may leave the cloud boundary on Door 1 or 2.');
+    }
+    if(proc==='yes'){
+      if(commit==='azure'){
+        h+=line('orange','Azure','Claude has no Azure-operated path. Both Foundry hosting options are Anthropic-operated, although the Azure-hosted option keeps prompts and completions in Azure.'+s(36)+' If Azure must be the sole processor, use a model Azure operates itself.');
+      } else {
+        h+=line('green','Door 3','Claude in Amazon Bedrock, which runs with zero operator access for Anthropic,'+s(49)+' or Google Cloud\'s Agent Platform, which Google operates.'+s(48)+' Confirm the model, region and endpoint are in scope of the program you rely on.');
+      }
+    } else if(feat==='yes'){
+      if(commit==='aws'){
+        h+=line('purple','Door 2','Claude Platform on AWS: Anthropic-operated, typically same-day features, AWS IAM and CloudTrail, billed through AWS Marketplace with commitment retirement.'+s(55)+s(3));
+      } else if(commit==='azure'){
+        h+=line('purple','Door 2','Claude in Foundry, Hosted on Anthropic. The Azure-hosted option lacks code execution, Skills, Files and current web tools.'+s(36)+' Usage counts toward Azure consumption commitments for eligible customers'+s(10)+' but not toward Agent Commit Units.'+s(69));
+      } else {
+        var g=(commit==='google')?' Google Cloud has no maker-run Claude door; its Agent Platform is Google-operated with a narrower tool set.'+s(48):'';
+        h+=line('blue','Door 1','The Claude API directly: full feature set, betas first.'+s(48)+g);
+      }
+    } else {
+      if(commit==='aws'){
+        h+=line('green','Door 3','Bedrock if AWS should process the data,'+s(1))+line('purple','Door 2','or Claude Platform on AWS if you want Anthropic\'s feature set on the AWS bill.'+s(55));
+      } else if(commit==='azure'){
+        h+=line('purple','Door 2','Claude in Foundry: Hosted on Azure for most workloads, with prompts kept in Azure; Hosted on Anthropic for models or features not yet on Azure.'+s(36));
+      } else if(commit==='google'){
+        h+=line('green','Door 3','Google Cloud\'s Agent Platform, Google-operated.'+s(48));
+      } else {
+        h+=line('blue','Door 1','The direct API is the simplest default when no cloud constraint binds.'+s(48));
+      }
+    }
+    if(zdr==='yes'){
+      h+=line('','Retention','Covered models require 30-day retention on every platform unless your organization is notified that it may keep ZDR. Choose the door by where retained data may sit: Anthropic for the API and Claude Platform on AWS, AWS for Bedrock, Google Cloud for Agent Platform; Foundry needs a separate subscription if ZDR is configured.'+s(52));
+    }
+    if(multi==='yes'){
+      h+=line('blue','Door 1','One integration across clouds favors the direct API, because each cloud door has its own authentication, model identifiers and feature set.'+s(49)+s(36));
+    }
+    out.innerHTML=h;
+  }
+  ['q-proc','q-feat','q-commit','q-zdr','q-multi'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.addEventListener('change',run);
+  });
+  run();
+})();
+
+/* v2.0: glossary filter */
+(function(){
+  var q=document.getElementById('gloss-q'), body=document.getElementById('gloss-body');
+  if(!q||!body) return;
+  q.addEventListener('input',function(){
+    var t=q.value.toLowerCase();
+    [].forEach.call(body.querySelectorAll('tr'),function(r){
+      r.style.display=(!t||r.textContent.toLowerCase().indexOf(t)>-1)?'':'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>
