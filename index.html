@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f5f5f7" id="themeColorMeta">
-<title>Frontier Labs vs Cloud Model Platforms v2.0 — Field Note</title>
-<meta property="og:title" content="Frontier Labs vs Cloud Model Platforms v2.0">
+<title>Frontier Labs vs Cloud Model Platforms v2.1 — Field Note</title>
+<meta property="og:title" content="Frontier Labs vs Cloud Model Platforms v2.1">
 <meta property="og:description" content="Who operates inference, who processes the prompt, who owns whom and who gets paid: frontier lab services compared with multi-lab cloud model platforms, with an ownership map, cost model, door chooser and thirteen-field contract checklist. October 2026.">
 <meta name="description" content="Who operates inference, who processes the prompt, who owns whom and who gets paid: frontier lab services compared with multi-lab cloud model platforms, with an ownership map, cost model, door chooser and thirteen-field contract checklist. October 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -483,7 +483,7 @@ td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outlin
   <nav class="nav" aria-label="Sections">
     <div class="wrap">
       <span class="brand">Field Note</span>
-      <span class="vtag">v2.0</span>
+      <span class="vtag">v2.1</span>
       <div id="navlinks"></div>
       <button id="menubtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer">☰</button>
     </div>
@@ -495,7 +495,7 @@ td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outlin
   <div class="orb a"></div>
   <div class="orb b"></div>
   <div class="wrap">
-    <div class="eyebrow">Field Note / AI Platforms / <b>v2.0</b> · 12 October 2026, 4:10 PM ET · build 2026-10-12T16:10-04:00</div>
+    <div class="eyebrow">Field Note / AI Platforms / <b>v2.1</b> · 19 October 2026, 6:08 PM ET · build 2026-10-19T18:08-04:00</div>
     <h1 class="h1">Same model, <em>different door.</em></h1>
     <p class="lede">A frontier lab sells its models and the product surface it builds around them. A cloud model platform sells many labs' models inside the cloud's identity, network, billing and compliance perimeter. In 2026 the old exclusivities broke: Claude runs on all three hyperscalers, and since 28 April OpenAI's frontier models run on AWS as well as Azure. The choice now turns on who operates inference, who processes the prompt, which features and safeguards come with the model, where agent state lives, and whose contract you sign. Each door is also a deal: the clouds that host the labs own parts of them, sell them compute and collect their bills.</p>
     <a class="cta" href="#reading">Read on</a>
@@ -782,6 +782,7 @@ td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outlin
 
     <h3 class="sub-h">One set of weights, several safeguard and access regimes</h3>
     <p>Anthropic states that Claude Fable 5 and Fable 5.1 share the same underlying model as Claude Mythos 5 and Mythos 5.1, with additional safeguards in the cyber and bio domains <a class="src" href="#s52">S52</a>. On Bedrock, Fable models are open to all customers, Mythos 5 and 5.1 require verification, and Claude Mythos Preview is invitation-only through Project Glasswing, served from us-east-1 to an allowlisted, dedicated AWS account <a class="src" href="#s49">S49</a>. Foundry carries Fable and Mythos only in its Anthropic-hosted option, with Mythos Preview open to invited customers <a class="src" href="#s36">S36</a>. The door now decides which safety configuration of a model you can reach, not only who runs it.</p>
+    <p>Anthropic is no longer the only lab doing this. Google released Gemini 4 Argon on 30 September first to vetted cyber defenders through its Fairwind early-access program, and made it generally available through the Gemini API, Google Cloud and its own apps on 13 October <a class="src" href="#s77">S77</a> <a class="src" href="#s78">S78</a>. Access tiered by verified customer class is becoming a lab practice, and every cloud that hosts those models has to enforce the tiers in its own console.</p>
 
     <h3 class="sub-h">Retention follows the model; where it is held follows the door</h3>
     <p>For covered models, the Mythos class and successors Anthropic designates, prompts and outputs are retained for 30 days on every platform where the models are offered, effective 9 June 2026. Organizations with zero data retention must turn retention on to use them unless Anthropic notifies them that they are eligible to keep ZDR <a class="src" href="#s52">S52</a>. Where the retained data sits differs by door: with Anthropic for the Claude API and Claude Platform on AWS, inside AWS for Bedrock, inside Google Cloud for Agent Platform, and in a separate Azure subscription for Foundry customers whose main subscription is configured for ZDR <a class="src" href="#s52">S52</a>. A contract that says "zero data retention" without naming the model is incomplete.</p>
@@ -882,7 +883,9 @@ td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outlin
             <tr><td><strong>1 Jul 2026</strong></td><td>Fable 5 returns on Anthropic's surfaces after the controls are lifted; a hands-on test finds it live on Bedrock the same day</td><td>Restoration runs maker-first</td><td><a class="src" href="#s53">S53</a> <a class="src" href="#s54">S54</a></td></tr>
             <tr><td><strong>9 Jul 2026</strong></td><td>GPT-5.6 Sol, Terra and Luna GA on Bedrock</td><td>Bedrock tracks new OpenAI model families, not only legacy ones</td><td><a class="src" href="#s13">S13</a></td></tr>
             <tr><td><strong>8 Sep 2026</strong></td><td>GPT-6 Astra GA on Bedrock; ChatGPT Work and Codex can be pointed at Bedrock inference</td><td>Lab applications running on a rival cloud's serving stack</td><td><a class="src" href="#s14">S14</a></td></tr>
+            <tr><td><strong>22 Sep 2026</strong></td><td>Claude Opus 5.5 launches on the Claude API and on AWS, Google Cloud and Microsoft Azure the same day</td><td>Day-one model parity across clouds; the feature matrix re-read on 12 October still shows the tool gap in section 03</td><td><a class="src" href="#s80">S80</a></td></tr>
             <tr><td><strong>29 Sep 2026</strong></td><td>Reuters reports Anthropic's confidential IPO filing: 47% of 2025 revenue came through AWS and Google</td><td>The first public look at channel economics</td><td><a class="src" href="#s44">S44</a></td></tr>
+            <tr><td><strong>30 Sep and 13 Oct 2026</strong></td><td>Gemini 4 Argon goes first to vetted cyber defenders through Fairwind, then to general availability</td><td>A second lab gates a frontier model by verified tier before release</td><td><a class="src" href="#s77">S77</a> <a class="src" href="#s78">S78</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -1143,6 +1146,7 @@ td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outlin
         <table>
           <thead><tr><th>Check by</th><th>What to look for</th><th>What it tests</th></tr></thead>
           <tbody>
+            <tr><td><strong>26 Oct 2026</strong></td><td>Anthropic's public S-1, reported for this date <a class="src" href="#s79">S79</a></td><td>The first test of the third check below, and the replacement for the Reuters channel figures <a class="src" href="#s44">S44</a></td></tr>
             <tr><td><strong>31 Dec 2026</strong></td><td>A Fable-class model offered in Foundry's Azure-hosted option</td><td>Whether safeguard-heavy models stay maker-hosted</td></tr>
             <tr><td><strong>30 Jun 2027</strong></td><td>Anthropic server-side tools, such as code execution or web search, on Bedrock's AWS-operated endpoint</td><td>The first falsifier above</td></tr>
             <tr><td><strong>30 Jun 2027</strong></td><td>A lab's public filing that separates revenue by cloud door, not only by cloud</td><td>Whether "the split nobody publishes" survives a listing</td></tr>
@@ -1320,18 +1324,22 @@ td input:focus-visible, .chk:focus-visible{outline:2px solid var(--blue); outlin
       <li id="s74"><span class="tier">B</span>Directions on Microsoft, <a href="https://www.directionsonmicrosoft.com/microsoft-openai-amend-their-agreement-again/" target="_blank" rel="noopener">Microsoft, OpenAI amend their agreement again</a>. 27 Apr 2026.</li>
       <li id="s75"><span class="tier">A</span>IBM Newsroom, <a href="https://newsroom.ibm.com/2025-10-07-2025-ibm-and-anthropic-partner-to-advance-enterprise-software-development-with-proven-security-and-governance" target="_blank" rel="noopener">IBM and Anthropic partner to advance enterprise software development</a>. 7 Oct 2025.</li>
       <li id="s76"><span class="tier">B</span>TechTarget, <a href="https://www.techtarget.com/ai/news/366626223/Oracle-adds-xAI-Grok-models-to-OCI" target="_blank" rel="noopener">Oracle adds xAI Grok models to OCI</a>. 2025.</li>
+      <li id="s77"><span class="tier">A</span>Google, <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/" target="_blank" rel="noopener">Introducing Gemini 4 Argon</a>. 13 Oct 2026.</li>
+      <li id="s78"><span class="tier">B</span>TechNews, <a href="https://technews.tw/?p=1622722" target="_blank" rel="noopener">Gemini 4 Argon and the Fairwind early-access program</a> (Chinese). Oct 2026; accessed 19 Oct 2026.</li>
+      <li id="s79"><span class="tier">B</span>IFR, <a href="https://www.ifre.com/equities/2499407/anthropic-pushes-ahead-with-mid-november-ipo" target="_blank" rel="noopener">Anthropic pushes ahead with mid-November IPO</a>. Oct 2026; accessed 19 Oct 2026.</li>
+      <li id="s80"><span class="tier">B</span>TechNews, <a href="https://technews.tw/2026/09/23/anthropic-upgrades-claude-with-new-opus-5-5-model/" target="_blank" rel="noopener">Anthropic upgrades Claude with new Opus 5.5 model</a> (Chinese). 23 Sep 2026.</li>
     </ol>
 
     <div class="fieldnote">
       <div class="kicker">Shelf life</div>
-      <p>Model names, hosting options, feature coverage and deal terms in this space change monthly. Re-check the feature matrix <a class="src" href="#s48">S48</a>, Foundry hosting options <a class="src" href="#s36">S36</a> and Bedrock model access <a class="src" href="#s49">S49</a> before using this note in a customer or investor setting. Channel figures come from a confidential filing as reported by Reuters and will be superseded by a public prospectus if one is filed.</p>
+      <p>Model names, hosting options, feature coverage and deal terms in this space change monthly. Re-check the feature matrix <a class="src" href="#s48">S48</a>, Foundry hosting options <a class="src" href="#s36">S36</a> and Bedrock model access <a class="src" href="#s49">S49</a> before using this note in a customer or investor setting. Channel figures come from a confidential filing as reported by Reuters and will be superseded by the public prospectus, which Anthropic was reported in mid-October to be planning to file on 26 October 2026 <a class="src" href="#s79">S79</a>.</p>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p class="verstamp">Frontier Labs vs Cloud Model Platforms — v2.0 · build 2026-10-12T16:10-04:00 · 12 October 2026, 4:10 PM ET · supersedes v1.1 (build 2026-09-23T08:54-04:00). Changes in v2.0: Foundry's Azure-hosted Claude reclassified from Door 3 to Door 2 per Anthropic's documentation; exclusivity timeline rebuilt around the October 2025 recapitalization, Amazon's February 2026 OpenAI investment and the April 2026 Microsoft amendment; feature-gap claim re-sourced to Anthropic's feature matrix with a per-path table; new sections on reading vendor claims, ownership and channel economics with a workload cost calculator, what varies for one model by door, tools and agent state, lineage, falsifiers and judgments, and a filterable glossary; door chooser and switching-cost table added to the decision guide; contract checklist expanded from six to thirteen fields; landscape extended to Oracle, IBM, applications and regional platforms; source tiers added and 40 sources added (S37 to S76).</p>
+    <p class="verstamp">Frontier Labs vs Cloud Model Platforms v2.1 · build 2026-10-19T18:08-04:00 · 19 October 2026, 6:08 PM ET · supersedes v2.0 (build 2026-10-12T16:10-04:00). Changes in v2.1: Gemini 4 Argon&rsquo;s Fairwind-first release added to the access-regime section and the timeline as a second lab gating a frontier model by verified tier; Claude Opus 5.5&rsquo;s same-day launch on all three hyperscalers added to the timeline; Anthropic&rsquo;s reported 26 October public filing added to the check-by table and the shelf-life note; four sources added (S77&ndash;S80). Thesis, doors and judgments unchanged.<br>v2.0 superseded v1.1 (build 2026-09-23T08:54-04:00). Changes in v2.0: Foundry's Azure-hosted Claude reclassified from Door 3 to Door 2 per Anthropic's documentation; exclusivity timeline rebuilt around the October 2025 recapitalization, Amazon's February 2026 OpenAI investment and the April 2026 Microsoft amendment; feature-gap claim re-sourced to Anthropic's feature matrix with a per-path table; new sections on reading vendor claims, ownership and channel economics with a workload cost calculator, what varies for one model by door, tools and agent state, lineage, falsifiers and judgments, and a filterable glossary; door chooser and switching-cost table added to the decision guide; contract checklist expanded from six to thirteen fields; landscape extended to Oracle, IBM, applications and regional platforms; source tiers added and 40 sources added (S37 to S76).</p>
   </div>
 </footer>
 
